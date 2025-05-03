@@ -1,0 +1,38 @@
+{
+  "name": "create-node-spark",
+  "version": "1.0.0",
+  "description": "CLI tool to scaffold a Node.js backend",
+  "license": "MIT",
+  "author": "talhabilal",
+  "type": "module",
+  "bin": {
+    "create-node-backend": "bin/index.js"
+  },
+  "keywords": [
+    "nodejs",
+    "cli",
+    "scaffolding",
+    "backend",
+    "express",
+    "mongoose",
+    "mongodb",
+    "auth",
+    "multer",
+    "api",
+    "create-node-backend",
+    "project-generator",
+    "node-backend-generator",
+    "starter-template",
+    "npm-package"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/talhabilal-dev/create-node-spark.git"
+  },
+  "bugs": {
+    "url": "https://github.com/talhabilal-dev/create-node-spark/issues"
+  },
+  "homepage": "https://github.com/talhabilal-dev/create-node-spark#readme",
+  "dependencies": {}
+}
+
