@@ -6,7 +6,7 @@
   "author": "talhabilal",
   "type": "module",
   "bin": {
-    "create-node-backend": "bin/index.js"
+    "create-node-spark": "bin/index.js"
   },
   "keywords": [
     "nodejs",
