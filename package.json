@@ -1,6 +1,6 @@
 {
   "name": "create-node-spark",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI tool to scaffold a Node.js backend",
   "license": "MIT",
   "author": "talhabilal",
@@ -35,4 +35,3 @@
   "homepage": "https://github.com/talhabilal-dev/create-node-spark#readme",
   "dependencies": {}
 }
-
