@@ -3,7 +3,6 @@
 The fastest way to scaffold production-ready Node.js backends — no manual setup, no headaches.
 
 ![npm](https://img.shields.io/npm/v/create-node-spark)
-![GitHub stars](https://img.shields.io/github/talhabilal-dev/create-node-spark)
 ![License](https://img.shields.io/github/license/talhabilal-dev/create-node-spark)
 
 ---
@@ -32,7 +31,7 @@ No more messy files — get a scalable layout:
 ├── .env
 ├── eslint.config.js (if selected)
 ├── package.json (ESM ready)
-└──  package-lock.json
+└── package-lock.json
 ```
 
 ✅ **Auto Installs Key Dependencies**
@@ -101,7 +100,7 @@ After answering, it generates:
 If you prefer non-interactive mode (coming soon), you’ll be able to pass flags like:
 
 ```bash
-create-node-spark --auth --monitor --eslint
+create-node-spark --auth --multer --eslint
 ```
 
 **Note: This is planned for future versions!**
