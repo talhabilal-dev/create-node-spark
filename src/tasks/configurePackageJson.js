@@ -12,6 +12,8 @@ export async function configurePackageJson(projectName) {
   packageJson.scripts = {
     ...packageJson.scripts,
     dev: "nodemon src/index.js",
+    lint: "eslint .",
+    "lint:fix": "eslint . --fix",
   };
 
   // Write back to package.json

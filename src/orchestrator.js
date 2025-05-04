@@ -6,7 +6,8 @@ import { setupEnv } from "./tasks/setupEnv.js";
 import { addAuth } from "./tasks/addAuth.js";
 import { addMulter } from "./tasks/addMulter.js";
 import { configureScripts } from "./tasks/configureScripts.js";
-import { configurePackageJson } from './tasks/configurePackageJson.js';
+import { configurePackageJson } from "./tasks/configurePackageJson.js";
+import { setupESLintConfig } from "./tasks/setupESLint.js";
 
 export async function orchestrateSetup() {
   console.log("🚀 Welcome to create-node-backend!");
@@ -14,15 +15,19 @@ export async function orchestrateSetup() {
   const projectName = await askQuestion("Project name: ");
   const useAuth = await askQuestion("Include auth? (y/n): ");
   const useMulter = await askQuestion("Include Multer (file uploads)? (y/n): ");
+  const useLint = await askQuestion("Use ESLint? (y/n): ");
 
   await setupNpm(projectName);
-  await installDependencies(useAuth, useMulter);
+  await installDependencies(useAuth, useMulter, useLint);
   await setupFolderStructure(projectName);
   await setupEnv(projectName);
+
   if (useAuth.toLowerCase() === "y") await addAuth(projectName);
   if (useMulter.toLowerCase() === "y") await addMulter(projectName);
+
   await configureScripts(projectName);
   await configurePackageJson(projectName);
+  if (useLint.toLowerCase() === "y") await setupESLintConfig(projectName);
 
   console.log(`👉 Project "${projectName}" created!`);
   console.log(`👉 Run: cd ${projectName} && npm run dev`);
