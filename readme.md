@@ -31,7 +31,7 @@ No more messy files — get a scalable layout:
 ├── .env
 ├── eslint.config.js (if selected)
 ├── package.json (ESM ready)
-└──  package-lock.json
+└── package-lock.json
 ```
 
 ✅ **Auto Installs Key Dependencies**
@@ -100,7 +100,7 @@ After answering, it generates:
 If you prefer non-interactive mode (coming soon), you’ll be able to pass flags like:
 
 ```bash
-create-node-spark --auth --monitor --eslint
+create-node-spark --auth --multer --eslint
 ```
 
 **Note: This is planned for future versions!**
