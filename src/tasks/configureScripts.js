@@ -5,7 +5,9 @@ export async function configureScripts(projectName) {
   const indexContent = `
 import express from 'express';
 import dotenv from 'dotenv';
+import connectDB from './config/db.config.js';
 import routes from './routes/userRoutes.js';
+
 
 dotenv.config();
 
