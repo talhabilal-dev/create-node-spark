@@ -4,7 +4,6 @@ The fastest way to scaffold production-ready Node.js backends — no manual setu
 
 ![npm](https://img.shields.io/npm/v/create-node-spark)
 ![License](https://img.shields.io/github/license/talhabilal-dev/create-node-spark)
-![Node.js Version](https://img.shields.io/node/v/create-node-spark)
 ![Downloads](https://img.shields.io/npm/dm/create-node-spark)
 
 ---
