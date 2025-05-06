@@ -6,7 +6,7 @@
   "author": "talhabilal",
   "type": "module",
   "bin": {
-    "create-node-spark": "bin/index.js"
+    "create-node-spark": "src/bin/index.js"
   },
   "keywords": [
     "nodejs",
@@ -33,5 +33,7 @@
     "url": "https://github.com/talhabilal-dev/create-node-spark/issues"
   },
   "homepage": "https://github.com/talhabilal-dev/create-node-spark#readme",
-  "dependencies": {}
+  "dependencies": {
+    "inquirer": "^12.6.0"
+  }
 }

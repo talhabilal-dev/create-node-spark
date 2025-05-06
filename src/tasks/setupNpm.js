@@ -1,18 +1,32 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
+import { logError, logInfo } from "../utils/logger.js";
+import { configurePackageJson } from "./configurePackageJson.js";
+import { configureTsConfig } from "./configureTsConfig.js";
+import { createDirectory } from "../utils/fileSystem.js";
 
-export async function setupNpm(projectName) {
-  const projectPath = path.join(process.cwd(), projectName);
+export async function setupNpm(projectName, language) {
 
-  if (fs.existsSync(projectPath)) {
-    console.error(`❌ Project folder already exists. Choose a different name.`);
-    process.exit(1);
+  try {
+    const projectPath = path.join(process.cwd(), projectName);
+
+    await createDirectory(projectPath);
+    process.chdir(projectPath);
+
+    logInfo("📦 Initializing npm...");
+    execSync("npm init -y", { stdio: "ignore" });
+
+    await configurePackageJson(projectName, language);
+
+    if (language === "TypeScript") {
+
+      await configureTsConfig(projectName);
+
+    }
+  } catch (error) {
+    throw error;
+
   }
 
-  fs.mkdirSync(projectPath);
-  process.chdir(projectPath);
-
-  console.log("📦 Initializing npm...");
-  execSync("npm init -y", { stdio: "inherit" });
 }

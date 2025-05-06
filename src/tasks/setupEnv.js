@@ -1,12 +1,14 @@
-import fs from "fs";
+import { writeFile } from "../utils/fileSystem.js";
 import path from "path";
 
 export async function setupEnv(projectName) {
-  const envContent = `
+    const envContent = `
 PORT=3000
 JWT_SECRET=your_jwt_secret
-MONGO_URI=mongodb://localhost:27017/${projectName}
 
 `;
-  fs.writeFileSync(path.join(process.cwd(), ".env"), envContent.trim());
+
+    const envPath = path.join(process.cwd(), ".env");
+
+    writeFile(envPath, envContent.trim(), "utf-8");
 }

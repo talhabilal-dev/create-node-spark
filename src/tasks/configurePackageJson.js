@@ -1,22 +1,50 @@
-import fs from "fs";
 import path from "path";
+import { logError, logSuccess } from "../utils/logger.js";
+import { writeFile, readFile } from "../utils/fileSystem.js";
 
-export async function configurePackageJson(projectName) {
-  const packageJsonPath = path.join(process.cwd(), "package.json");
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+export async function configurePackageJson(projectName, language) {
+    try {
+        const packageJsonPath = path.join(process.cwd(), "package.json");
+        const rawPackageJson = await readFile(packageJsonPath, "utf-8");
 
-  // Ensure ESM
-  packageJson.type = "module";
+        const packageJson = JSON.parse(rawPackageJson);
 
-  // Add dev script
-  packageJson.scripts = {
-    ...packageJson.scripts,
-    dev: "nodemon src/index.js",
-    lint: "eslint .",
-    "lint:fix": "eslint . --fix",
-  };
+        // Ensure ESM
+        packageJson.type = "module";
 
-  // Write back to package.json
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-  console.log('✅ package.json updated: added "type": "module" and dev script');
+        const isTS = language === "TypeScript";
+
+        // Dev script
+        const devScript = isTS ? "tsx src/index.ts" : "nodemon src/index.js";
+
+        // Start script
+        const startScript = isTS ? "node dist/index.js" : "node src/index.js";
+
+        // Build script (only for TS)
+        if (isTS) {
+            packageJson.scripts = {
+                ...packageJson.scripts,
+                build: "tsc"
+            };
+        }
+
+        // Add or update scripts
+        packageJson.scripts = {
+            ...packageJson.scripts,
+            dev: devScript,
+            start: startScript
+        };
+
+        // Write back updated package.json with pretty format
+        await writeFile(
+            packageJsonPath,
+            JSON.stringify(packageJson, null, 2),
+            "utf-8"
+        );
+
+        logSuccess('✅ package.json updated: set scripts and module type');
+    } catch (error) {
+        logError(`❌ Failed to configure package.json: ${error.message}`);
+        throw error;
+    }
 }
