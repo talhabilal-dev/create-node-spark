@@ -26,9 +26,9 @@ const project = async () => {
 
     await setupFolderStructure(projectDetails.projectName);
 
-    await setupEnv(projectDetails.projectName);
+    await setupEnv(projectDetails.projectName, projectDetails.language);
 
-    await configureIndex(projectDetails.projectName, projectDetails.language , projectDetails.framework);
+    await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework);
 
     return projectDetails.projectName;
   } catch (error) {
