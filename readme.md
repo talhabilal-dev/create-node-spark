@@ -4,21 +4,7 @@
 
 ![npm](https://img.shields.io/npm/v/create-node-spark)
 ![License](https://img.shields.io/github/license/talhabilal-dev/create-node-spark)
-![Node.js Version](https://img.shields.io/node/v/create-node-spark)
 ![Downloads](https://img.shields.io/npm/dm/create-node-spark)
-
-## 📋 Overview
-
-**create-node-spark** is a powerful CLI tool designed to eliminate the tedious process of setting up Node.js backend projects from scratch. Instead of spending hours configuring your project structure, installing dependencies, and setting up common middleware, create-node-spark generates a complete, production-ready backend scaffold in seconds.
-
-### 🤔 Why Use create-node-spark?
-
-- **Save Development Time**: Stop rewriting the same boilerplate code for every new project
-- **Standardized Structure**: Follow industry best practices with a scalable folder structure
-- **Modern JavaScript**: Built for ESM out of the box, no CommonJS headaches
-- **Pre-configured Essentials**: Authentication, file uploads, and code quality tools ready to go
-- **Minimal Configuration**: Answer just three simple questions, and you're ready to code
-- **Focus on Business Logic**: Spend time building features, not setting up infrastructure
 
 ---
 
