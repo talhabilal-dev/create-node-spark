@@ -17,7 +17,19 @@ export async function setupEnv(projectName, language) {
 
         const configEnvPath = path.join(process.cwd(), "src", "config", `env.config.${extension}`);
 
-        const configEnvContent = `
+        const configEnvContent = language === "TypeScript" ? `
+        import dotenv from "dotenv";
+        
+        dotenv.config();
+
+        const ENV : any = {
+  PORT: process.env.PORT || 3000,
+};
+
+export default ENV;
+
+        `:
+            `
         import dotenv from "dotenv";
         
         dotenv.config();
