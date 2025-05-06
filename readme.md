@@ -385,3 +385,7 @@ This project stands on the shoulders of some amazing tools and libraries:
 - **The open-source community** — For constant inspiration and pushing the ecosystem forward.
 
 > Special thanks to everyone who has contributed issues, discussions, or pull requests — you make create-node-spark better every day!
+
+## 📜 Changelog
+
+For detailed version history, check the [CHANGELOG.md](./CHANGELOG.md).
