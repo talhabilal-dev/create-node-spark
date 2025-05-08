@@ -29,6 +29,13 @@ async function askProjectDetails() {
       default: "none",
     },
     {
+      type: "list",
+      name: "database",
+      message: "Choose the database:",
+      choices: ["none", "MongoDB"],
+      default: "none",
+    },
+    {
       type: "checkbox",
       name: "features",
       message:

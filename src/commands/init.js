@@ -5,6 +5,7 @@ import { setupESLintConfig } from "../tasks/setUpEslint.js";
 import { setupFolderStructure } from "../tasks/setUpFolderStructure.js";
 import { setupEnv } from "../tasks/setupEnv.js";
 import { configureIndex } from "../tasks/configureIndex.js";
+import { setupDb } from "../tasks/setupDb.js";
 const project = async () => {
 
   try {
@@ -17,6 +18,7 @@ const project = async () => {
     await installDependencies({ ...projectDetails });
 
 
+
     if (projectDetails.features.includes('eslint')) {
 
 
@@ -26,9 +28,19 @@ const project = async () => {
 
     await setupFolderStructure(projectDetails.projectName);
 
-    await setupEnv(projectDetails.language);
+    if (projectDetails.database === "MongoDB") {
 
-    await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework);
+      await setupDb(projectDetails.projectName, projectDetails.language);
+      await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework, projectDetails.database);
+    } else {
+      await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework, null);
+    }
+
+    await setupEnv(projectDetails.projectName, projectDetails.language);
+
+
+
+
 
     return projectDetails.projectName;
   } catch (error) {

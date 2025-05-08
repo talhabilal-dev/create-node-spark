@@ -1,13 +1,15 @@
 import { writeFile } from "../utils/fileSystem.js";
 import path from "path";
 
-export async function setupEnv(language) {
+
+export async function setupEnv(projectName, language) {
     try {
 
         const extension = language === "TypeScript" ? "ts" : "js";
 
         const envContent = `
-        PORT=3000   
+        PORT=3000
+        MONGO_URI=mongodb+srv://<username>::<password>@cluster0.m8oca.mongodb.net/<database_name>?retryWrites=true&w=majority&appName=Cluster0
         `;
 
         const envPath = path.join(process.cwd(), ".env");
@@ -24,6 +26,7 @@ export async function setupEnv(language) {
 
         const ENV : any = {
   PORT: process.env.PORT || 3000,
+  MONGO_URI: process.env.MONGO_URI
 };
 
 export default ENV;
@@ -36,13 +39,14 @@ export default ENV;
 
         const ENV = {
   PORT: process.env.PORT || 3000,
+  MONGO_URI: process.env.MONGO_URI
 };
 
 export default ENV;
 
         `;
 
-       await writeFile(configEnvPath, configEnvContent.trim(), "utf-8")
+        writeFile(configEnvPath, configEnvContent.trim(), "utf-8")
 
     }
 
