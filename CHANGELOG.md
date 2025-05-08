@@ -7,6 +7,28 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [2.1.0] — 2025-05-08
+
+**🌱 Database Selection Added:**
+
+- Choose between None (no DB setup) or MongoDB when scaffolding your project.
+
+**🔗 Smart DB Bootstrapping:**
+
+- When MongoDB is selected, the generated index.js ensures:
+
+- The server only starts after a successful DB connection.
+
+- If no DB (None), it starts immediately as before.
+
+**🛠 Environment Config Improved:**
+
+- ENV variables now live in a dedicated config/env.config.js file for better organization.
+
+- 🔧 Minor code cleanups & internal improvements.
+
+---
+
 ## [2.0.0] — 2025-05-06
 
 ### 🚀 Major Upgrade
