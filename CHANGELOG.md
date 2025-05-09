@@ -5,6 +5,36 @@ All notable changes to **create-node-spark** will be documented in this file.
 This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)  
 and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+
+# [2.2.0] - 2025-05-09
+
+## Added:
+
+- Multiple file upload support (Multer integrated)
+
+- Public folder structure:
+
+``` bash
+/public
+
+  /images
+
+  /css
+
+  /js
+
+  /temp
+  ```
+
+## 🛠️ Improvements:
+
+- Added /services folder inside /src
+
+- Added /utils folder inside /src
+
+Cleaned up and enhanced overall folder structure for clarity & scalability
+
 ---
 
 ## [2.1.0] — 2025-05-08

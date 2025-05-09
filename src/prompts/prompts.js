@@ -43,7 +43,7 @@ async function askProjectDetails() {
       choices: [
         { name: "ESLint (Linter)", value: "eslint" },
         // { name: "Database (Basic Setup - Placeholder)", value: "database" }, // Placeholder for now
-        // { name: "Multer (File Uploads)", value: "multer" }, // Placeholder for now
+        { name: "Multer (File Uploads)", value: "multer" }, // Placeholder for now
       ],
       default: [], // No features selected by default
     },

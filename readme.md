@@ -82,9 +82,17 @@ Whether you’re just starting out or you're an experienced developer, create-no
 
   Scaffolds your project with Express.js, a fast, unopinionated, and minimal web framework that’s perfect for building scalable REST APIs.
 
+- **MongoDB Integration**
+
+  Choose to set up MongoDB integration with Mongoose out of the box. No need for additional setup.
+
 - **Optional ESLint Setup**
 
   Ensure your code stays clean and consistent with the optional ESLint setup. You can skip it if you prefer not to use it.
+
+- **Optional Multer Setup**
+
+  Configure Multer for file uploads, so you can quickly add file upload capabilities to your REST API.
 
 - **Minimal Dependencies**
 
@@ -92,7 +100,7 @@ Whether you’re just starting out or you're an experienced developer, create-no
 
 - **Customizable Prompts**
 
-  Get options for language choice, ESLint setup, and more during project creation, giving you full control over the final scaffolded project.
+  Get options for language choice, ESLint setup , multer setup , and more during project creation, giving you full control over the final scaffolded project.
 
 - **Future-Ready**
 
@@ -167,7 +175,7 @@ You’ll be prompted with a few configuration options:
 
 **Choose the language**: Select either JavaScript or TypeScript for your project.
 
-**Enable ESLint:** Choose whether or not to include ESLint for linting your code.
+**Enable additional features:** Choose whether or not to include ESLint for linting your code and multer for file upload.
 
 Follow the Prompts
 
@@ -175,7 +183,14 @@ The CLI tool will walk you through the setup, asking for:
 
 Language selection (JavaScript or TypeScript)
 
-> ESLint configuration (Press space to select, a to toggle all, i to invert selection)
+FrameWork selection (None or Express)
+
+DataBase selection (None or Mongodb)
+
+> Additional Features (Press space to select, a to toggle all, i to invert selection)
+
+- Eslint
+- Multer
 
 After answering these prompts, the tool will automatically scaffold your new project, creating all necessary files and folder structure. 3. Start Developing
 
@@ -191,6 +206,11 @@ If you choose Express as the framework, the tool will scaffold your project as f
 
 ```bash
 my-node-project/
+├── public/
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── temp/
 ├── src/
 │   ├── config/
 │   ├── controllers/
@@ -198,9 +218,10 @@ my-node-project/
 │   ├── models/
 │   ├── routes/
 │   ├── utils/
+│   ├── services/
 │   └── index.js (or index.ts)
 ├── package.json
-├── .eslint.config.json (if ESLint is enabled)
+├── eslint.config.json (if ESLint is enabled)
 └── README.md
 ```
 
@@ -218,7 +239,7 @@ my-node-project/
 
 - src/utils/: Utility functions that can be used throughout the app.
 
-If ESLint is enabled, you’ll also get an .eslint.config.json file for code quality.
+If ESLint is enabled, you’ll also get an eslint.config.json file for code quality.
 
 ## JavaScript / TypeScript without Framework (HTTP server only)
 
@@ -226,6 +247,11 @@ If you choose None (no framework), your project will be scaffolded as follows:
 
 ```bash
 my-node-project/
+├── public/
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── temp/
 ├── src/
 │   ├── config/
 │   ├── controllers/
@@ -233,6 +259,7 @@ my-node-project/
 │   ├── models/
 │   ├── routes/
 │   ├── utils/
+│   ├── services/
 │   └── index.js (or index.ts)
 ├── package.json
 ├── .eslint.config.json (if ESLint is enabled)
@@ -260,19 +287,21 @@ We’re not just stopping at scaffolding Express + REST APIs — create-node-spa
 
 - Lightweight, minimal dependency (inquirer only)
 
+- MongoDB integration setup (with Mongoose)
+
+- Support for setting up environment variables (.env) out of the box
+
+- Multer file upload integration setup
+
 ## 🚀 In Progress
 
 - Add Fastify support (alternative to Express)
-
-- Support for setting up environment variables (.env) out of the box
 
 - Improve folder structure customization (let users decide what they want scaffolded)
 
 ## 🛠 Planned / Future Features
 
 - GraphQL API scaffold option
-
-- MongoDB integration setup (with Mongoose)
 
 - PostgreSQL + Prisma integration setup
 

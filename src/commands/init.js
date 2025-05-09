@@ -6,6 +6,7 @@ import { setupFolderStructure } from "../tasks/setUpFolderStructure.js";
 import { setupEnv } from "../tasks/setupEnv.js";
 import { configureIndex } from "../tasks/configureIndex.js";
 import { setupDb } from "../tasks/setupDb.js";
+import { configureMulter } from "../tasks/configureMulter.js";
 const project = async () => {
 
   try {
@@ -25,6 +26,14 @@ const project = async () => {
       await setupESLintConfig(projectDetails.language);
 
     }
+
+    if (projectDetails.features.includes('multer')) {
+
+
+      await configureMulter(projectDetails.language);
+
+    }
+
 
     await setupFolderStructure(projectDetails.projectName);
 
