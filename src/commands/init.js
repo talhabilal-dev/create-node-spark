@@ -5,7 +5,8 @@ import { setupESLintConfig } from "../tasks/setUpEslint.js";
 import { setupFolderStructure } from "../tasks/setUpFolderStructure.js";
 import { setupEnv } from "../tasks/setupEnv.js";
 import { configureIndex } from "../tasks/configureIndex.js";
-import { setupDb } from "../tasks/setupDb.js";
+import { setupMongoDb } from "../tasks/setupMongoDb.js";
+import { setupSql } from "../tasks/setupSql.js";
 import { configureMulter } from "../tasks/configureMulter.js";
 const project = async () => {
 
@@ -37,9 +38,15 @@ const project = async () => {
 
     await setupFolderStructure(projectDetails.projectName);
 
-    if (projectDetails.database === "MongoDB") {
+    if (projectDetails.database !== 'none') {
 
-      await setupDb(projectDetails.projectName, projectDetails.language);
+      if (projectDetails.database === 'MySQL') {
+        await setupSql(projectDetails.projectName, projectDetails.language);
+      }
+
+      if (projectDetails.database === 'MongoDB') {
+        await setupMongoDb(projectDetails.projectName, projectDetails.language);
+      }
       await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework, projectDetails.database);
     } else {
       await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework, null);

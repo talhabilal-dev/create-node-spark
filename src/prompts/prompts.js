@@ -32,7 +32,7 @@ async function askProjectDetails() {
       type: "list",
       name: "database",
       message: "Choose the database:",
-      choices: ["none", "MongoDB"],
+      choices: ["none", "MongoDB" , "MySQL"],
       default: "none",
     },
     {

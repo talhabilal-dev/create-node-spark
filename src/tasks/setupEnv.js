@@ -10,6 +10,11 @@ export async function setupEnv(projectName, language) {
         const envContent = `
         PORT=3000
         MONGO_URI=mongodb+srv://<username>::<password>@cluster0.m8oca.mongodb.net/<database_name>?retryWrites=true&w=majority&appName=Cluster0
+       MYSQL_HOST=localhost
+  MYSQL_PORT=3306
+MYSQL_DATABASE=your_database_name
+MYSQL_USER=root
+MYSQL_PASSWORD=your_password
         `;
 
         const envPath = path.join(process.cwd(), ".env");
@@ -26,7 +31,12 @@ export async function setupEnv(projectName, language) {
 
         const ENV : any = {
   PORT: process.env.PORT || 3000,
-  MONGO_URI: process.env.MONGO_URI
+  MONGO_URI: process.env.MONGO_URI,
+  MYSQL_HOST: process.env.MYSQL_HOST,
+      port: process.env.MYSQL_PORT,
+      MYSQL_DATABASE: process.env.MYSQL_DATABASE,
+      MYSQL_USER: process.env.MYSQL_USER,
+      MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
 };
 
 export default ENV;
@@ -39,7 +49,12 @@ export default ENV;
 
         const ENV = {
   PORT: process.env.PORT || 3000,
-  MONGO_URI: process.env.MONGO_URI
+  MONGO_URI: process.env.MONGO_URI,
+    MYSQL_HOST: process.env.MYSQL_HOST,
+      port: process.env.MYSQL_PORT,
+      MYSQL_DATABASE: process.env.MYSQL_DATABASE,
+      MYSQL_USER: process.env.MYSQL_USER,
+      MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
 };
 
 export default ENV;
