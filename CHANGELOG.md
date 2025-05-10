@@ -5,7 +5,26 @@ All notable changes to **create-node-spark** will be documented in this file.
 This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)  
 and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+---
 
+# Phase 1: The Sparking Phase (Completed)
+
+## [2.3.0] - 2025-05-10
+
+## Added
+
+**MySQL Support**
+- Introduced MySQL compatibility for backend apps.
+- Added support for MySQL databases.
+- Integrated `knex`, and `mysql2` packages to manage MySQL connections and queries.
+
+### Changed
+
+- Updated database connection handling to support both MongoDB and MySQL.
+- Minor bug fixes related to database connection handling.
+
+
+---
 
 # [2.2.0] - 2025-05-09
 
@@ -15,7 +34,7 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Public folder structure:
 
-``` bash
+```bash
 /public
 
   /images
@@ -25,7 +44,7 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   /js
 
   /temp
-  ```
+```
 
 ## 🛠️ Improvements:
 

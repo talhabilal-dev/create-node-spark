@@ -8,9 +8,14 @@
 
 ---
 
+# 🚀 **Phase 1 Completed!**  
+We are thrilled to announce that **Phase 1** of the project has been successfully completed! This milestone includes the foundational features of the project.Stay tuned for more updates as we continue to enhance and build on this foundation in the coming phases.
+Check out the [changelog](https://github.com/talhabilal-dev/create-node-spark#changelog) for more details and updates.
+
 # 🛠️ Introduction
 
 > ⚡ Spark your Node.js backend, skip the boilerplate.
+
 
 **create-node-spark** is a powerful CLI (Command Line Interface) tool designed to scaffold production-ready Node.js backend projects with ease. Inspired by tools like Create Next App and Vite, this tool removes the boilerplate pain by generating a clean, structured, and configurable Node.js project — so you can focus on building features, not setting up folders and configs.
 
@@ -27,6 +32,14 @@ Here’s what it sets up for you under the hood:
 - ✅ Uses modern ESM (ECMAScript Modules) — no old CommonJS clutter
 
 - ✅ Built on Express.js, one of the most popular and battle-tested Node.js frameworks
+
+- ✅ Pre-configured for MongoDB integration with Mongoose
+
+- ✅ Pre-configured for MySQL integration with Knex.js and mysql2
+
+- ✅ Sets up environment variables (.env) out of the box
+
+- ✅ Includes an optional Multer setup to handle file uploads
 
 - ✅ Includes an optional ESLint setup to keep your codebase clean and consistent
 
@@ -54,7 +67,15 @@ Unlike many other tools that bring along bulky dependencies, create-node-spark o
 
 ### 🔧 Customizable Setup
 
-Not only can you choose between JavaScript or TypeScript, but you also have the option to enable or skip ESLint setup based on your project needs.
+Not only can you choose between JavaScript or TypeScript, but you also have the option to enable or skip ESLint and Multer setup based on your project needs.
+
+### 🚀 Quick Start
+
+Spend less time setting up your backend and more time coding. With create-node-spark, you can quickly jump into building your REST API, without the need for manual setup.
+
+###  DataBase Integration
+
+create-node-spark supports MongoDB and MySQL integration. You can choose to set up MongoDB or MySQL integration with Mongoose or Knex.js and mysql2 respectively.
 
 ### 🌱 Future-Proof
 
@@ -82,9 +103,9 @@ Whether you’re just starting out or you're an experienced developer, create-no
 
   Scaffolds your project with Express.js, a fast, unopinionated, and minimal web framework that’s perfect for building scalable REST APIs.
 
-- **MongoDB Integration**
+- **DataBase Integration**
 
-  Choose to set up MongoDB integration with Mongoose out of the box. No need for additional setup.
+  Support for MongoDB integration with Mongoose and MySQL integration with Knex.js and mysql2
 
 - **Optional ESLint Setup**
 
@@ -161,6 +182,8 @@ After this, you can use the tool globally just like the other installation metho
 
 # 🚀 Usage
 
+![CreateNodeSpark Demo](https://res.cloudinary.com/dvdktrhsz/image/upload/v1746865105/create-node-spark/hiriakqdjtiijjjpvf3s.gif)
+
 Once create-node-spark is installed, using it is a breeze. Here’s how you can get started with scaffolding your new Node.js backend project:
 
 1. Run the Tool
@@ -177,7 +200,7 @@ You’ll be prompted with a few configuration options:
 
 **Enable additional features:** Choose whether or not to include ESLint for linting your code and multer for file upload.
 
-Follow the Prompts
+**Follow the Prompts**
 
 The CLI tool will walk you through the setup, asking for:
 
@@ -185,7 +208,7 @@ Language selection (JavaScript or TypeScript)
 
 FrameWork selection (None or Express)
 
-DataBase selection (None or Mongodb)
+DataBase selection (None or Mongodb or Mysql)
 
 > Additional Features (Press space to select, a to toggle all, i to invert selection)
 
@@ -194,9 +217,14 @@ DataBase selection (None or Mongodb)
 
 After answering these prompts, the tool will automatically scaffold your new project, creating all necessary files and folder structure. 3. Start Developing
 
+![CreateNodeSpark Demo](https://res.cloudinary.com/dvdktrhsz/image/upload/v1746865404/create-node-spark/po6e4myw0tmwxm08hr3t.png)
+
 Once the project has been generated, you can immediately start developing your API. The scaffolding includes a ready-to-go Express setup, with all the necessary configurations in place to help you hit the ground running.
 
 # 🎨 Example Output
+
+![CreateNodeSpark Demo](https://res.cloudinary.com/dvdktrhsz/image/upload/v1746865259/create-node-spark/sk1h7rrj0cynfgcshtcc.png)
+
 
 When you run create-node-spark, the tool scaffolds your project based on the choices you make. Here’s what the generated project will look like for different configurations:
 
@@ -275,7 +303,7 @@ my-node-project/
 
 We’re not just stopping at scaffolding Express + REST APIs — create-node-spark is built with the future in mind. Here’s what’s planned:
 
-## ✅ Completed
+## ✅ Phase 1 Completed
 
 - Scaffold projects with JavaScript or TypeScript
 
@@ -289,11 +317,15 @@ We’re not just stopping at scaffolding Express + REST APIs — create-node-spa
 
 - MongoDB integration setup (with Mongoose)
 
+- Mysql integration setup (with Knex.js and mysql2)
+
 - Support for setting up environment variables (.env) out of the box
 
 - Multer file upload integration setup
 
-## 🚀 In Progress
+## Phase 2 (In Progress)
+
+- PostgreSQL + Prisma integration setup
 
 - Add Fastify support (alternative to Express)
 
@@ -302,8 +334,6 @@ We’re not just stopping at scaffolding Express + REST APIs — create-node-spa
 ## 🛠 Planned / Future Features
 
 - GraphQL API scaffold option
-
-- PostgreSQL + Prisma integration setup
 
 - Docker support (generate Dockerfile + docker-compose)
 
@@ -410,6 +440,12 @@ This project stands on the shoulders of some amazing tools and libraries:
 - **Inquirer** — For building interactive CLI prompts.
 
 - **ESLint** — Helping keep your code clean (if you choose to include it).
+
+- **Mongoose** — For MongoDB integration.
+
+- **Knex.js and mysql2** — For MySQL integration.
+
+- **Multer** — For file upload support.
 
 - **The open-source community** — For constant inspiration and pushing the ecosystem forward.
 
