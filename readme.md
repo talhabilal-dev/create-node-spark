@@ -16,6 +16,9 @@ Check out the [changelog](https://github.com/talhabilal-dev/create-node-spark#ch
 
 > ⚡ Spark your Node.js backend, skip the boilerplate.
 
+ 
+![CreateNodeSpark Demo](https://res.cloudinary.com/dvdktrhsz/image/upload/v1746865105/create-node-spark/hiriakqdjtiijjjpvf3s.gif)
+
 
 **create-node-spark** is a powerful CLI (Command Line Interface) tool designed to scaffold production-ready Node.js backend projects with ease. Inspired by tools like Create Next App and Vite, this tool removes the boilerplate pain by generating a clean, structured, and configurable Node.js project — so you can focus on building features, not setting up folders and configs.
 
