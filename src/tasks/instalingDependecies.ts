@@ -5,17 +5,20 @@ import {
   logSuccess,
   logWarning,
   logError,
+  logInstalling,
+  colors
 } from "../utils/logger.js";
+import { DependencyConfig } from "../types/index.js";
 
 const execPromise = promisify(exec);
 
-export async function installDependencies(args) {
-  const install = async (cmd, label) => {
+export async function installDependencies(args: DependencyConfig): Promise<void> {
+  const install = async (cmd: string, label: string): Promise<void> => {
     try {
-      logInfo(`Installing ${label}...`);
+      logInstalling(label);
       await execPromise(cmd);
-      logSuccess(`${label} installed successfully!`);
-    } catch (err) {
+      logSuccess(`${label} installed successfully!`, false);
+    } catch (err: any) {
       logError(`Failed to install ${label}: ${err.message}`);
     }
   };

@@ -2,7 +2,7 @@ import path from "path";
 import { writeFile } from "../utils/fileSystem.js";
 import { logSuccess } from "../utils/logger.js";
 
-export async function configureIndex(projectName, language, framework, database) {
+export async function configureIndex(projectName: string, language: string, framework: string, database: string | null): Promise<void> {
     try {
         const isTS = language === "TypeScript";
         const extension = isTS ? "ts" : "js";

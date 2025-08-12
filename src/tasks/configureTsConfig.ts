@@ -1,8 +1,8 @@
 import { writeFile } from "../utils/fileSystem.js";
 import path from "path";
-import { logSuccess } from "../utils/logger.js";
+import { logSuccess, logError } from "../utils/logger.js";
 
-export async function configureTsConfig(projectName) {
+export async function configureTsConfig(projectName: string): Promise<void> {
     try {
         const tsConfigPath = path.join(process.cwd(), "tsconfig.json");
 
@@ -33,8 +33,8 @@ export async function configureTsConfig(projectName) {
         );
 
         logSuccess(`✅ tsconfig.json has been set up for ${projectName}`);
-    } catch (err) {
+    } catch (err: any) {
 
-        logError("❌ Failed to configure tsconfig.json:", err);
+        logError(`❌ Failed to configure tsconfig.json: ${err.message}`);
     }
 }

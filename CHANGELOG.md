@@ -1,125 +1,148 @@
-# 📦 Changelog
+# Changelog
 
-All notable changes to **create-node-spark** will be documented in this file.
+All notable changes to this project will be documented in this file.
 
-This project follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)  
-and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
----
-
-# Phase 1: The Sparking Phase (Completed)
-
-## [2.3.0] - 2025-05-10
-
-## Added
-
-**MySQL Support**
-- Introduced MySQL compatibility for backend apps.
-- Added support for MySQL databases.
-- Integrated `knex`, and `mysql2` packages to manage MySQL connections and queries.
+## [2.4.0] - 2025-08-12
 
 ### Changed
 
-- Updated database connection handling to support both MongoDB and MySQL.
-- Minor bug fixes related to database connection handling.
+- **Major TypeScript Migration**: Complete conversion from JavaScript to TypeScript
+- Enhanced type safety with comprehensive type definitions and interfaces
+- Improved error handling with proper TypeScript error types
+- Updated build system to compile TypeScript to JavaScript output in `dist/` folder
+- Enhanced code quality with strict TypeScript compiler settings
 
+### Added
 
----
+- Created `types/index.ts` with project-wide type definitions (`ProjectDetails`, `DependencyConfig`)
+- Enhanced `tsconfig.json` with production-ready TypeScript configuration
+- New npm scripts: `clean`, `prepublishOnly`, and improved `start` script
+- Source maps and declaration files for better debugging experience
+- Comprehensive type annotations across all utility functions and tasks
+- **Interactive CLI Experience**: Beautiful ASCII art logo and enhanced terminal interface
+- **Enhanced Color Scheme**: 16+ color combinations with bright, professional styling
+- **Visual Feedback System**: Progress tracking, step indicators, and icon-based status updates
+- **Professional Branding**: Eye-catching NODE SPARK banner with decorative borders
+- **User Experience Improvements**: Screen clearing, interactive prompts, and completion celebration
 
-# [2.2.0] - 2025-05-09
+### Fixed
 
-## Added:
+- Resolved all TypeScript compilation errors
+- Fixed async/await usage in file system operations
+- Improved error handling in CLI prompts and task execution
+- Corrected exec command calls to remove invalid stdio options
 
-- Multiple file upload support (Multer integrated)
+## [2.3.0] - 2025-05-10
 
-- Public folder structure:
+### Added
 
-```bash
-/public
+- MySQL database support with full integration
+- `knex` and `mysql2` packages for MySQL connection and query management
+- Database selection between MongoDB, MySQL, or no database
 
-  /images
+### Changed
 
-  /css
+- Updated database connection handling to support multiple database types
+- Improved database configuration management
 
-  /js
+### Fixed
 
-  /temp
-```
+- Minor bug fixes related to database connection handling
 
-## 🛠️ Improvements:
+## [2.2.0] - 2025-05-09
 
-- Added /services folder inside /src
+### Added
 
-- Added /utils folder inside /src
+- Multiple file upload support with Multer integration
+- Enhanced public folder structure with organized directories:
+  - `/public/images`
+  - `/public/css`
+  - `/public/js`
+  - `/public/temp`
+- New `/services` folder in `/src` for business logic separation
+- New `/utils` folder in `/src` for utility functions
 
-Cleaned up and enhanced overall folder structure for clarity & scalability
+### Improved
 
----
+- Cleaned up and enhanced overall folder structure for better scalability
+- Improved code organization and maintainability
 
-## [2.1.0] — 2025-05-08
+## [2.1.0] - 2025-05-08
 
-**🌱 Database Selection Added:**
+### Added
 
-- Choose between None (no DB setup) or MongoDB when scaffolding your project.
+- Database selection option during project scaffolding
+- Smart database bootstrapping with connection-dependent server startup
+- Dedicated environment configuration file (`config/env.config.js`)
 
-**🔗 Smart DB Bootstrapping:**
+### Changed
 
-- When MongoDB is selected, the generated index.js ensures:
+- Server startup logic now waits for successful database connection when database is selected
+- Improved environment variable organization and management
 
-- The server only starts after a successful DB connection.
+### Fixed
 
-- If no DB (None), it starts immediately as before.
+- Minor code cleanups and internal improvements
 
-**🛠 Environment Config Improved:**
+## [2.0.0] - 2025-05-06
 
-- ENV variables now live in a dedicated config/env.config.js file for better organization.
+### Added
 
-- 🔧 Minor code cleanups & internal improvements.
+- **TypeScript support**: Choose between JavaScript or TypeScript for project scaffolding
+- "None" framework option using native Node.js `http` module for basic server setup
+- Improved CLI prompts with enhanced terminal UI
 
----
+### Changed
 
-## [2.0.0] — 2025-05-06
+- **Breaking**: Removed built-in authentication and Multer installation for cleaner, unopinionated scaffolding
+- Maintained detailed folder structure from version 1.1.0
+- Enhanced user experience with better prompts and options
 
-### 🚀 Major Upgrade
+### Improved
 
-- **Added TypeScript support**
-- Option to scaffold in **JavaScript** or **TypeScript**
-- Kept detailed folder structure from 1.1.0
-- **Removed built-in auth and Multer installation** (focus on clean, unopinionated scaffolding)
-- **Added “None” option** — if no framework is selected, uses native Node.js `http` module to set up a basic server
-- Improved CLI prompts and **terminal UI**
+- Focused on clean, minimal scaffolding approach
+- Better separation of concerns in generated projects
 
----
+## [1.1.0] - 2025-05-04
 
-## [1.1.0] — 2025-05-04
+### Added
 
-### ✨ Features
+- ESLint integration option for code quality enforcement
+- Comprehensive folder structure:
+  - `src/controllers` - Request handlers
+  - `src/models` - Data models
+  - `src/routes` - API routes
+  - `src/middlewares` - Custom middleware
+  - `src/utils` - Utility functions
+  - `src/config` - Configuration files
 
-- Added **ESLint** option
-- Improved output folder structure:
-  - `src/controllers`
-  - `src/models`
-  - `src/routes`
-  - `src/middlewares`
-  - `src/utils`
-  - `src/config`
+### Improved
 
----
+- Better project organization and scalability
+- Enhanced development workflow with linting support
 
-## [1.0.1] — 2025-05-03
+## [1.0.1] - 2025-05-03
 
-### 🎉 Fixed a minor Bug
+### Fixed
 
----
+- Minor bug fixes and stability improvements
 
-## [1.0.0] — 2025-05-03
+## [1.0.0] - 2025-05-03
 
-### 🎉 Initial Release
+### Added
 
-- Supports **JavaScript** scaffolding
-- Built-in installation for:
-  - **Authentication setup**
-  - **Multer** for file uploads
-- Basic Express server setup
+- Initial release of create-node-spark
+- JavaScript project scaffolding support
+- Express server setup with basic configuration
+- Built-in authentication setup
+- Multer integration for file uploads
+- Basic project structure generation
 
----
+### Features
+
+- Command-line interface for interactive project creation
+- Automated dependency installation
+- Ready-to-use Express application template

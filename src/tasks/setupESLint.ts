@@ -2,7 +2,7 @@ import { writeFile, readFile } from "../utils/fileSystem.js";
 import path from "path";
 import { logError, logSuccess } from "../utils/logger.js";
 
-export async function setupESLintConfig(language) {
+export async function setupESLintConfig(language: string): Promise<void> {
   try {
     const eslintConfigPath = path.join(process.cwd(), "eslint.config.js");
 
@@ -59,7 +59,7 @@ export default [
 
     await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2), "utf-8");
     logSuccess(`✅ Added "lint" script to package.json: "${lintCommand}"`);
-  } catch (error) {
+  } catch (error: any) {
     logError(error);
   }
 }

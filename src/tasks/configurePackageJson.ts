@@ -2,7 +2,7 @@ import path from "path";
 import { logError, logSuccess } from "../utils/logger.js";
 import { writeFile, readFile } from "../utils/fileSystem.js";
 
-export async function configurePackageJson(projectName, language) {
+export async function configurePackageJson(projectName: string, language: string): Promise<void> {
     try {
         const packageJsonPath = path.join(process.cwd(), "package.json");
         const rawPackageJson = await readFile(packageJsonPath, "utf-8");
@@ -43,7 +43,7 @@ export async function configurePackageJson(projectName, language) {
         );
 
         logSuccess('✅ package.json updated: set scripts and module type');
-    } catch (error) {
+    } catch (error: any) {
         logError(`❌ Failed to configure package.json: ${error.message}`);
         throw error;
     }

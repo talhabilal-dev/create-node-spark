@@ -2,12 +2,14 @@ import { writeFile } from "../utils/fileSystem.js";
 import path from "path";
 import { exec } from "child_process";
 import { promisify } from "util";
+import { logDatabaseSetup, logInstalling } from "../utils/logger.js";
 const execPromise = promisify(exec);
-export async function setupMongoDb(projectName, language) {
+export async function setupMongoDb(projectName: string, language: string): Promise<void> {
   try {
 
-
-    await execPromise("npm install mongoose", { stdio: "ignore" });
+    logDatabaseSetup("MongoDB");
+    logInstalling("mongoose");
+    await execPromise("npm install mongoose");
 
     const extension = language === "TypeScript" ? "ts" : "js";
 
@@ -50,7 +52,7 @@ export default connectDB;
 
   catch (error) {
 
-    throw new error;
+    throw error;
 
   }
 

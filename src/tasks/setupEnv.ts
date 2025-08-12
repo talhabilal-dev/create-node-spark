@@ -2,7 +2,7 @@ import { writeFile } from "../utils/fileSystem.js";
 import path from "path";
 
 
-export async function setupEnv(projectName, language) {
+export async function setupEnv(projectName: string, language: string): Promise<void> {
     try {
 
         const extension = language === "TypeScript" ? "ts" : "js";
@@ -68,7 +68,7 @@ export default ENV;
 
     catch (error) {
 
-        throw new error;
+        throw error;
 
     }
 

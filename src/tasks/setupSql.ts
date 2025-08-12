@@ -4,19 +4,19 @@ import { exec } from "child_process";
 import { promisify } from "util";
 import { logInfo } from "../utils/logger.js";
 const execPromise = promisify(exec);
-export async function setupSql(projectName, language) {
-    try {
+export async function setupSql(projectName: string, language: string): Promise<void> {
+  try {
 
 
 
-        logInfo("📦 Setting up MySQL...");
-        await execPromise("npm install knex mysql2", { stdio: "ignore" });
+    logInfo("📦 Setting up MySQL...");
+    await execPromise("npm install knex mysql2");
 
-        const extension = language === "TypeScript" ? "ts" : "js";
+    const extension = language === "TypeScript" ? "ts" : "js";
 
-        const configDbPath = path.join(process.cwd(), "src", "config", `db.config.${extension}`);
+    const configDbPath = path.join(process.cwd(), "src", "config", `db.config.${extension}`);
 
-        const configDbContent = language === "TypeScript" ? `import knex, { Knex } from 'knex';;
+    const configDbContent = language === "TypeScript" ? `import knex, { Knex } from 'knex';;
 import ENV from "./env.config";
 
 const connectDB = (): Knex => {
@@ -52,15 +52,15 @@ const connectDB = () => {
 export default connectDB();
 `;
 
-        writeFile(configDbPath, configDbContent.trim(), "utf-8")
+    writeFile(configDbPath, configDbContent.trim(), "utf-8")
 
-    }
+  }
 
 
-    catch (error) {
+  catch (error) {
 
-        throw new error;
+    throw error;
 
-    }
+  }
 
 }

@@ -1,0 +1,11 @@
+export interface ProjectDetails {
+    projectName: string;
+    language: 'JavaScript' | 'TypeScript';
+    framework: 'none' | 'Express';
+    database: 'none' | 'MongoDB' | 'MySQL';
+    features: ('eslint' | 'multer')[];
+}
+
+export interface DependencyConfig extends ProjectDetails {
+    // Additional properties for dependency configuration
+}
