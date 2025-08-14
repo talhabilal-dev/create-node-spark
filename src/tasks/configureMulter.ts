@@ -3,16 +3,20 @@ import path from "path";
 import { exec } from "child_process";
 import { logInfo } from "../utils/logger.js";
 import { promisify } from "util";
-const execPromise = promisify(exec);
-export async function configureMulter(language: string): Promise<void> {
-  try {
+import { getInstallCommand } from "../utils/packageManager.js";
 
+const execPromise = promisify(exec);
+
+export async function configureMulter(language: string, packageManager: 'npm' | 'pnpm'): Promise<void> {
+  try {
     logInfo("📦 Setting up Multer...");
-    await execPromise("npm install multer");
+    const multerCmd = getInstallCommand(packageManager, "multer");
+    await execPromise(multerCmd);
 
     if (language === "TypeScript") {
       logInfo("📦 Setting up Multer Types...");
-      await execPromise("npm install @types/multer");
+      const typesCmd = getInstallCommand(packageManager, "@types/multer", true);
+      await execPromise(typesCmd);
     }
 
 

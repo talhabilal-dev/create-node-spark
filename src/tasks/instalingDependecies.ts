@@ -9,12 +9,14 @@ import {
   colors
 } from "../utils/logger.js";
 import { DependencyConfig } from "../types/index.js";
+import { getInstallCommand } from "../utils/packageManager.js";
 
 const execPromise = promisify(exec);
 
 export async function installDependencies(args: DependencyConfig): Promise<void> {
-  const install = async (cmd: string, label: string): Promise<void> => {
+  const install = async (packages: string, label: string, isDev: boolean = false): Promise<void> => {
     try {
+      const cmd = getInstallCommand(args.packageManager, packages, isDev);
       logInstalling(label);
       await execPromise(cmd);
       logSuccess(`${label} installed successfully!`, false);
@@ -27,27 +29,40 @@ export async function installDependencies(args: DependencyConfig): Promise<void>
 
   // Base framework setup
   if (args.framework === "Express") {
-    await install("npm install express dotenv", "express + dotenv");
+    await install("express dotenv", "express + dotenv");
     if (isTS) {
       await install(
-        "npm install @types/express typescript tsx @types/node --save-dev",
-        "TypeScript tooling"
+        "@types/express typescript tsx @types/node",
+        "TypeScript tooling",
+        true
       );
     } else {
-      await install("npm install nodemon --save-dev", "nodemon");
+      await install("nodemon", "nodemon", true);
     }
   } else {
     // Raw Node.js still needs dotenv if you want .env support
-    await install("npm install dotenv", "dotenv");
+    await install("dotenv", "dotenv");
     if (isTS) {
-      await install("npm install typescript tsx @types/node --save-dev", "TypeScript tooling");
+      await install("typescript tsx @types/node", "TypeScript tooling", true);
     } else {
-      await install("npm install nodemon --save-dev", "nodemon");
+      await install("nodemon", "nodemon", true);
     }
   }
 
   // Optional ESLint feature
   if (args.features.includes("eslint")) {
-    await install("npm install eslint eslint-plugin-n eslint-plugin-promise --save-dev", "ESLint + plugins");
+    if (args.language === "TypeScript") {
+      await install(
+        "@eslint/js typescript-eslint eslint eslint-plugin-n eslint-plugin-promise prettier",
+        "ESLint + TypeScript plugins + Prettier",
+        true
+      );
+    } else {
+      await install(
+        "@eslint/js eslint eslint-plugin-n eslint-plugin-promise prettier",
+        "ESLint + plugins + Prettier",
+        true
+      );
+    }
   }
 }

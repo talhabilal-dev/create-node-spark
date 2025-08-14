@@ -2,6 +2,8 @@
 import inquirer from "inquirer";
 import { ProjectDetails } from "../types/index.js";
 import { logHeader, colors } from "../utils/logger.js";
+import { checkDirectoryExists } from "../utils/fileSystem.js";
+import path from "path";
 
 async function askProjectDetails(): Promise<ProjectDetails> {
   logHeader("Project Configuration");
@@ -12,11 +14,30 @@ async function askProjectDetails(): Promise<ProjectDetails> {
       name: "projectName",
       message: `${colors.brightCyan}🏗️  Enter your project name:${colors.reset}`,
       validate: function (input: string) {
-        if (/^([a-z0-9\-_]+)$/.test(input)) return true;
-        else
+        // Check project name format
+        if (!/^([a-z0-9\-_]+)$/.test(input)) {
           return `${colors.brightRed}❌ Project name may only include lowercase letters, numbers, underscores, and hyphens.${colors.reset}`;
+        }
+
+        // Check if directory already exists
+        const projectPath = path.join(process.cwd(), input);
+        if (checkDirectoryExists(projectPath)) {
+          return `${colors.brightRed}❌ Directory "${input}" already exists. Please choose a different name.${colors.reset}`;
+        }
+
+        return true;
       },
       default: "my-backend-app",
+    },
+    {
+      type: "list",
+      name: "packageManager",
+      message: `${colors.brightGreen}📦 Choose your package manager:${colors.reset}`,
+      choices: [
+        { name: `${colors.brightYellow}📦 npm${colors.reset}`, value: "npm" },
+        { name: `${colors.brightMagenta}⚡ pnpm${colors.reset}`, value: "pnpm" }
+      ],
+      default: "npm",
     },
     {
       type: "list",
@@ -77,6 +98,7 @@ async function askProjectDetails(): Promise<ProjectDetails> {
   console.log(`${colors.dim}─────────────────────────────────────────────────────────────────────${colors.reset}`);
   console.log(`${colors.brightWhite}📋 Project Summary:${colors.reset}`);
   console.log(`   ${colors.brightCyan}Name:${colors.reset} ${colors.brightWhite}${answers.projectName}${colors.reset}`);
+  console.log(`   ${colors.brightCyan}Package Manager:${colors.reset} ${colors.brightWhite}${answers.packageManager}${colors.reset}`);
   console.log(`   ${colors.brightCyan}Language:${colors.reset} ${colors.brightWhite}${answers.language}${colors.reset}`);
   console.log(`   ${colors.brightCyan}Framework:${colors.reset} ${colors.brightWhite}${answers.framework}${colors.reset}`);
   console.log(`   ${colors.brightCyan}Database:${colors.reset} ${colors.brightWhite}${answers.database}${colors.reset}`);

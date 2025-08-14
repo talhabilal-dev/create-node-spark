@@ -1,5 +1,6 @@
 export interface ProjectDetails {
     projectName: string;
+    packageManager: 'npm' | 'pnpm';
     language: 'JavaScript' | 'TypeScript';
     framework: 'none' | 'Express';
     database: 'none' | 'MongoDB' | 'MySQL';

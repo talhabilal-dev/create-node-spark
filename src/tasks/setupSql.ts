@@ -3,14 +3,15 @@ import path from "path";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { logInfo } from "../utils/logger.js";
+import { getInstallCommand } from "../utils/packageManager.js";
+
 const execPromise = promisify(exec);
-export async function setupSql(projectName: string, language: string): Promise<void> {
+
+export async function setupSql(projectName: string, language: string, packageManager: 'npm' | 'pnpm'): Promise<void> {
   try {
-
-
-
     logInfo("📦 Setting up MySQL...");
-    await execPromise("npm install knex mysql2");
+    const mysqlCmd = getInstallCommand(packageManager, "knex mysql2");
+    await execPromise(mysqlCmd);
 
     const extension = language === "TypeScript" ? "ts" : "js";
 

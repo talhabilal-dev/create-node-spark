@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2025-08-14
+
+### Added
+
+- **Package Manager Selection**: Users can now choose between npm and pnpm during project initialization
+- **Directory Existence Check**: Automatically checks if project directory already exists before creation to prevent overwrites
+- **Enhanced Project Setup Flow**: Improved prompts and validation during project scaffolding
+
+### Changed
+
+- **Dependency Installation**: All package installations now respect the user's chosen package manager (npm or pnpm)
+- **Script Generation**: Generated package.json scripts now use the appropriate package manager commands
+- **Setup Tasks**: All setup tasks (ESLint, Multer, Database) now use the selected package manager consistently
+
+## [2.4.1] - 2025-08-13
+
+### Added
+
+- **Developer-Friendly ESLint Configuration**: Balanced ESLint setup for solo developers and small teams
+- **TypeScript-Specific Linting**: Added `typescript-eslint` with reasonable type safety rules
+- **Code Quality Rules**: Essential rules for code consistency without being overwhelming
+- **Prettier Integration**: Added `.prettierrc` configuration for consistent code formatting
+- **Multiple Lint Scripts**: Added `lint`, `lint:fix`, `lint:check`, `format`, and `format:check` npm scripts
+- **Smart Ignore Patterns**: Created comprehensive `.eslintignore` file excluding build outputs, dependencies, and IDE files
+- **Test File Configuration**: Special ESLint rules for test files with relaxed restrictions
+
+### Changed
+
+- **From Strict to Practical** – Started with strict rules, then softened them for better DX while keeping quality safeguards.
+- **TypeScript Support Upgrade** – Moved from JS-only linting to full TypeScript linting with type information.
+- **Relaxed `any` Usage** – Now warns instead of errors on `any` for early development flexibility.
+- **Console Logs Allowed** – `console.log` now permitted for debugging.
+- **Formatting Rules Downgraded** – Most formatting rules changed from errors to warnings.
+- **Security Plugins Removed** – Dropped heavy security plugins to reduce complexity for small teams.
+- **Promise Rules Adjusted** – Loosened some async handling rules for real-world workflows.
+
+## Fixed
+
+- **Type-Aware ESLint Errors** – Resolved parser issues so ESLint understands TypeScript syntax and types.
+- **File Targeting** – Lint commands now focus on `src/` and skip compiled output (`dist/`).
+- **Plugin Compatibility** – Fixed conflicts between ESLint core, TypeScript ESLint plugin, and Node/Promise plugins.
+
 ## [2.4.0] - 2025-08-12
 
 ### Changed

@@ -3,13 +3,16 @@ import path from "path";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { logDatabaseSetup, logInstalling } from "../utils/logger.js";
-const execPromise = promisify(exec);
-export async function setupMongoDb(projectName: string, language: string): Promise<void> {
-  try {
+import { getInstallCommand } from "../utils/packageManager.js";
 
+const execPromise = promisify(exec);
+
+export async function setupMongoDb(projectName: string, language: string, packageManager: 'npm' | 'pnpm'): Promise<void> {
+  try {
     logDatabaseSetup("MongoDB");
     logInstalling("mongoose");
-    await execPromise("npm install mongoose");
+    const mongooseCmd = getInstallCommand(packageManager, "mongoose");
+    await execPromise(mongooseCmd);
 
     const extension = language === "TypeScript" ? "ts" : "js";
 

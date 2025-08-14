@@ -1,8 +1,9 @@
 import path from "path";
 import { logError, logSuccess } from "../utils/logger.js";
 import { writeFile, readFile } from "../utils/fileSystem.js";
+import { getRunCommand } from "../utils/packageManager.js";
 
-export async function configurePackageJson(projectName: string, language: string): Promise<void> {
+export async function configurePackageJson(projectName: string, language: string, packageManager: 'npm' | 'pnpm'): Promise<void> {
     try {
         const packageJsonPath = path.join(process.cwd(), "package.json");
         const rawPackageJson = await readFile(packageJsonPath, "utf-8");
@@ -35,6 +36,9 @@ export async function configurePackageJson(projectName: string, language: string
             start: startScript
         };
 
+        // Add package manager info for reference
+        packageJson.packageManager = packageManager;
+
         // Write back updated package.json with pretty format
         await writeFile(
             packageJsonPath,
@@ -42,7 +46,7 @@ export async function configurePackageJson(projectName: string, language: string
             "utf-8"
         );
 
-        logSuccess('✅ package.json updated: set scripts and module type');
+        logSuccess(`✅ package.json updated: set scripts, module type, and package manager (${packageManager})`);
     } catch (error: any) {
         logError(`❌ Failed to configure package.json: ${error.message}`);
         throw error;

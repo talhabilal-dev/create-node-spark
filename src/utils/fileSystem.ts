@@ -3,6 +3,10 @@ import path from "path";
 
 import { existsSync, lstatSync } from "fs";
 
+const checkDirectoryExists = (dirPath: string): boolean => {
+    return existsSync(dirPath) && lstatSync(dirPath).isDirectory();
+};
+
 const createDirectory = async (dirPath: string): Promise<void> => {
     if (existsSync(dirPath)) {
         throw new Error(`Directory already exists at ${dirPath}`);
@@ -103,4 +107,4 @@ async function copyDirectory(sourceDir: string, destDir: string): Promise<void> 
     }
 }
 
-export { createDirectory, writeFile, readFile, copyFile, copyDirectory, createMultipleDirectories };
+export { checkDirectoryExists, createDirectory, writeFile, readFile, copyFile, copyDirectory, createMultipleDirectories };

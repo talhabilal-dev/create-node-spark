@@ -20,14 +20,14 @@ const project = async (): Promise<string> => {
     logHeader("Building Your Project");
 
     logStep(1, 6, "Setting up npm and project structure");
-    await setupNpm(projectDetails.projectName, projectDetails.language);
+    await setupNpm(projectDetails.projectName, projectDetails.language, projectDetails.packageManager);
 
     logStep(2, 6, "Installing dependencies");
-    // await installDependencies({ ...projectDetails });
+    await installDependencies({ ...projectDetails });
 
     let stepCount = 3;
-    const totalSteps = 6 + 
-      (projectDetails.features.includes('eslint') ? 1 : 0) + 
+    const totalSteps = 6 +
+      (projectDetails.features.includes('eslint') ? 1 : 0) +
       (projectDetails.features.includes('multer') ? 1 : 0) +
       (projectDetails.database !== 'none' ? 1 : 0);
 
@@ -38,7 +38,7 @@ const project = async (): Promise<string> => {
 
     if (projectDetails.features.includes('multer')) {
       logStep(stepCount++, totalSteps, "Setting up Multer for file uploads");
-      await configureMulter(projectDetails.language);
+      await configureMulter(projectDetails.language, projectDetails.packageManager);
     }
 
     logStep(stepCount++, totalSteps, "Creating folder structure");
@@ -46,13 +46,13 @@ const project = async (): Promise<string> => {
 
     if (projectDetails.database !== 'none') {
       logStep(stepCount++, totalSteps, `Setting up ${projectDetails.database} database`);
-      
+
       if (projectDetails.database === 'MySQL') {
-        await setupSql(projectDetails.projectName, projectDetails.language);
+        await setupSql(projectDetails.projectName, projectDetails.language, projectDetails.packageManager);
       }
 
       if (projectDetails.database === 'MongoDB') {
-        await setupMongoDb(projectDetails.projectName, projectDetails.language);
+        await setupMongoDb(projectDetails.projectName, projectDetails.language, projectDetails.packageManager);
       }
       await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework, projectDetails.database);
     } else {
