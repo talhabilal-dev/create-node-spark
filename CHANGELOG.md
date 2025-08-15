@@ -5,7 +5,87 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.5.0] - 2025-08-14
+## [2.6.0] - 2025-08-14
+
+### 🚀 Added
+
+- **CLI Flags System**
+  - Project configuration: `--name`, `--lang`, `--framework`, `--db`, `--pm`
+  - Feature flags: `--eslint`, `--multer`, `--no-eslint`, `--no-multer`
+  - Utility flags: `--yes` (skip prompts), `--verbose`, `--silent`
+  - Help & version: `--help`, `--version` with comprehensive docs
+  - Hybrid mode: mix flags with prompts; prompts only for missing values
+  - Automation-ready: full CI/CD scripting support
+  - Flag validation: detailed error messages for invalid combinations
+  - Modern CLI experience: flag patterns similar to Create React App/Vite
+
+- **PostgreSQL + Prisma Integration**
+  - Full PostgreSQL support with Prisma ORM
+  - Pre-configured `prisma/schema.prisma` with User and Post models
+  - Service layer with CRUD operations
+  - API controllers and route integration for PostgreSQL projects
+  - Environment configuration: `DATABASE_URL` support
+  - CLI: `--db postgresql` and `--db postgres` flags, interactive prompt option
+  - Automatic installation of Prisma & @prisma/client
+  - TypeScript support with Prisma-generated types
+  - Optimized connection management (singleton pattern)
+
+### 🛠 Changed
+
+- Enhanced prompts to work with partial flag-based configuration
+- Flexible configuration: combine flags and prompts seamlessly
+- Smart defaults with `--yes` flag for missing values
+- Improved error handling for invalid flag combinations
+- Modified `setupEnv` to generate DB-specific environment configs
+- .env files now only include variables for selected DB
+
+### ✨ Improved
+
+- Environment variables generated only for chosen DB (MongoDB, MySQL, PostgreSQL, or none)
+- Cleaner, more focused environment configuration management
+- Tailored database setup for each DB option
+
+### 🏆 Enhanced
+
+- Database options: now supports MongoDB, MySQL, PostgreSQL
+- Expanded project structure for PostgreSQL
+- Updated documentation with PostgreSQL examples
+- Improved help output to include all DB options
+
+---
+
+## 🧑‍💻 Usage Examples
+
+```bash
+# PostgreSQL + Prisma with TypeScript
+npx create-node-spark my-api --lang ts --framework express --db postgresql --yes
+
+# Interactive PostgreSQL selection
+npx create-node-spark my-api --lang typescript --framework express
+# Select PostgreSQL + Prisma from the menu
+
+# MongoDB automation
+npx create-node-spark my-api --lang ts --framework express --db mongodb --eslint --yes
+
+# Quick setup with package manager
+npx create-node-spark my-api --pm pnpm --yes
+```
+
+---
+
+## 📁 Files Generated for PostgreSQL Projects
+
+- `prisma/schema.prisma` — Prisma database schema with example models
+- `src/config/db.config.ts` — Prisma client configuration
+- `src/services/user.service.ts` — User CRUD service
+- `src/controllers/user.controller.ts` — API controllers
+- `src/routes/user.routes.ts` — Express user routes
+- `.env` — Includes `DATABASE_URL` for PostgreSQL
+- `src/index.ts` — Prisma connection & routes integration
+
+---
+
+## [2.5.0] - 2025-08-1 to 2025-08-14
 
 ### Added
 

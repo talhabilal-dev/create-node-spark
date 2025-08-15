@@ -1,18 +1,11 @@
 import { writeFile } from "../utils/fileSystem.js";
 import path from "path";
-import { exec } from "child_process";
-import { promisify } from "util";
-import { logDatabaseSetup, logInstalling } from "../utils/logger.js";
-import { getInstallCommand } from "../utils/packageManager.js";
-
-const execPromise = promisify(exec);
+import { logDatabaseSetup } from "../utils/logger.js";
 
 export async function setupMongoDb(projectName: string, language: string, packageManager: 'npm' | 'pnpm'): Promise<void> {
   try {
     logDatabaseSetup("MongoDB");
-    logInstalling("mongoose");
-    const mongooseCmd = getInstallCommand(packageManager, "mongoose");
-    await execPromise(mongooseCmd);
+    // Note: mongoose dependency is now installed in installDependencies function
 
     const extension = language === "TypeScript" ? "ts" : "js";
 

@@ -15,7 +15,8 @@ export async function configureIndex(projectName: string, language: string, fram
                 ? `
 import express, { Request, Response } from 'express';
 import ENV from "./config/env.config";
-${database === 'MongoDB' ? `import connectDB from './config/db.config';` : database === 'MySQL' ? `import connectDB from './config/db.config';` : ''}
+${database === 'MongoDB' ? `import connectDB from './config/db.config';` : database === 'MySQL' ? `import connectDB from './config/db.config';` : database === 'PostgreSQL' ? `import prisma from './config/db.config';` : ''}
+${database === 'PostgreSQL' ? `import userRoutes from './routes/user.routes';` : ''}
 
 const app = express();
 app.use(express.json());
@@ -24,19 +25,28 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello from ${projectName} backend!');
 });
 
+${database === 'PostgreSQL' ? `
+// API Routes
+app.use('/api/users', userRoutes);
+` : ''}
 const port: number = ENV.PORT || 3000;
 {{APP_LISTEN}};
                 `
                 : `
 import express from 'express';
 import ENV from "./config/env.config.js";
-${database === 'MongoDB' ? `import connectDB from './config/db.config.js';` : database === 'MySQL' ? `import connectDB from './config/db.config.js';` : ''}
+${database === 'MongoDB' ? `import connectDB from './config/db.config.js';` : database === 'MySQL' ? `import connectDB from './config/db.config.js';` : database === 'PostgreSQL' ? `import prisma from './config/db.config.js';` : ''}
+${database === 'PostgreSQL' ? `import userRoutes from './routes/user.routes.js';` : ''}
 
 const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => res.send('Hello from ${projectName} backend!'));
 
+${database === 'PostgreSQL' ? `
+// API Routes
+app.use('/api/users', userRoutes);
+` : ''}
 const port = ENV.PORT || 3000;
 {{APP_LISTEN}};
                 `;
@@ -45,7 +55,7 @@ const port = ENV.PORT || 3000;
                 ? `
 import http, { IncomingMessage, ServerResponse } from 'http';
 import ENV from "./config/env.config";
-${database === 'MongoDB' ? `import connectDB from './config/db.config';` : database === 'MySQL' ? `import connectDB from './config/db.config';` : ''}
+${database === 'MongoDB' ? `import connectDB from './config/db.config';` : database === 'MySQL' ? `import connectDB from './config/db.config';` : database === 'PostgreSQL' ? `import prisma from './config/db.config';` : ''}
 
 const app = http.createServer((req: IncomingMessage, res: ServerResponse) => {
     if (req.url === '/' && req.method === 'GET') {
@@ -63,7 +73,7 @@ const port: number = ENV.PORT || 3000;
                 : `
 import http from 'http';
 import ENV from "./config/env.config.js";
-${database === 'MongoDB' ? `import connectDB from './config/db.config.js';` : database === 'MySQL' ? `import connectDB from './config/db.config.js';` : ''}
+${database === 'MongoDB' ? `import connectDB from './config/db.config.js';` : database === 'MySQL' ? `import connectDB from './config/db.config.js';` : database === 'PostgreSQL' ? `import prisma from './config/db.config.js';` : ''}
 
 const app = http.createServer((req, res) => {
     if (req.url === '/' && req.method === 'GET') {
@@ -117,6 +127,24 @@ connectDB.raw('SELECT 1').then(() => {
     app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
 }).catch((err) => {
     console.error('❌ Failed to connect to DB:', err);
+});
+                `;
+        } else if (database === 'PostgreSQL') {
+            appListenLogic = isTS
+                ? `
+prisma.$connect().then(() => {
+    console.log('✅ Connected to PostgreSQL with Prisma');
+    app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
+}).catch((err: any) => {
+    console.error('❌ Failed to connect to PostgreSQL:', err);
+});
+                `
+                : `
+prisma.$connect().then(() => {
+    console.log('✅ Connected to PostgreSQL with Prisma');
+    app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
+}).catch((err) => {
+    console.error('❌ Failed to connect to PostgreSQL:', err);
 });
                 `;
         } else {

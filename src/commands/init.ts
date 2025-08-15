@@ -7,17 +7,43 @@ import { setupEnv } from "../tasks/setupEnv.js";
 import { configureIndex } from "../tasks/configureIndex.js";
 import { setupMongoDb } from "../tasks/setupMongoDb.js";
 import { setupSql } from "../tasks/setupSql.js";
+import { setupPostgresPrisma } from "../tasks/setupPostgresPrisma.js";
 import { configureMulter } from "../tasks/configureMulter.js";
 import { ProjectDetails } from "../types/index.js";
-import { logHeader, logStep, logFeature } from "../utils/logger.js";
+import { logHeader, logStep, logFeature, logInfo } from "../utils/logger.js";
+import { CliFlags } from "../utils/cliArgs.js";
 
-const project = async (): Promise<string> => {
+const project = async (flagBasedConfig?: Partial<ProjectDetails>, flags?: CliFlags): Promise<string> => {
 
   try {
 
-    const projectDetails: ProjectDetails = await askProjectDetails();
+    let projectDetails: ProjectDetails;
 
-    logHeader("Building Your Project");
+    // If we have flag-based config and --yes flag, use defaults for missing values
+    if (flagBasedConfig && flags?.yes) {
+      logInfo("🚀 Using flag-based configuration with defaults...");
+      projectDetails = {
+        projectName: flagBasedConfig.projectName || 'my-node-app',
+        language: flagBasedConfig.language || 'JavaScript',
+        framework: flagBasedConfig.framework || 'Express',
+        database: flagBasedConfig.database || 'none',
+        packageManager: flagBasedConfig.packageManager || 'npm',
+        features: flagBasedConfig.features || [],
+      };
+    }
+    // If we have partial flag config, merge with interactive prompts
+    else if (flagBasedConfig && Object.keys(flagBasedConfig).length > 0) {
+      logInfo("🔧 Using flag-based configuration with interactive prompts for missing options...");
+      projectDetails = await askProjectDetails(flagBasedConfig);
+    }
+    // Pure interactive mode
+    else {
+      projectDetails = await askProjectDetails();
+    }
+
+    if (!flags?.silent) {
+      logHeader("Building Your Project");
+    }
 
     logStep(1, 6, "Setting up npm and project structure");
     await setupNpm(projectDetails.projectName, projectDetails.language, projectDetails.packageManager);
@@ -54,13 +80,18 @@ const project = async (): Promise<string> => {
       if (projectDetails.database === 'MongoDB') {
         await setupMongoDb(projectDetails.projectName, projectDetails.language, projectDetails.packageManager);
       }
+
+      if (projectDetails.database === 'PostgreSQL') {
+        await setupPostgresPrisma(projectDetails.projectName, projectDetails.language, projectDetails.packageManager);
+      }
+
       await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework, projectDetails.database);
     } else {
       await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework, null);
     }
 
     logStep(stepCount++, totalSteps, "Setting up environment configuration");
-    await setupEnv(projectDetails.projectName, projectDetails.language);
+    await setupEnv(projectDetails.projectName, projectDetails.language, projectDetails.database !== 'none' ? projectDetails.database : undefined);
 
     logStep(stepCount, totalSteps, "Finalizing project setup");
 

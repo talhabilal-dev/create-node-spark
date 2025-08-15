@@ -3,7 +3,7 @@ export interface ProjectDetails {
     packageManager: 'npm' | 'pnpm';
     language: 'JavaScript' | 'TypeScript';
     framework: 'none' | 'Express';
-    database: 'none' | 'MongoDB' | 'MySQL';
+    database: 'none' | 'MongoDB' | 'MySQL' | 'PostgreSQL';
     features: ('eslint' | 'multer')[];
 }
 

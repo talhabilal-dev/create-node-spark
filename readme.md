@@ -66,7 +66,8 @@ create-node-spark
 - **Package Manager**: npm or pnpm support
 - **Modern ES Modules**: No CommonJS legacy
 - **Framework Ready**: Express.js pre-configured
-- **Database Integration**: MongoDB & MySQL support
+- **Database Integration**: MongoDB, MySQL & PostgreSQL support
+- **Modern ORM**: Prisma integration for PostgreSQL
 - **File Uploads**: Optional Multer configuration
 
 </td>
@@ -226,7 +227,17 @@ my-awesome-api/
 </td>
 <td width="50%">
 
-### 🐬 **MySQL + Knex.js**
+### � **PostgreSQL + Prisma**
+
+- Modern ORM with type safety
+- Auto-generated client and types
+- Migration support ready
+- Advanced querying capabilities
+
+</td>
+<td width="50%">
+
+### �🐬 **MySQL + Knex.js**
 
 - Query builder configured
 - Migration support ready
@@ -264,7 +275,7 @@ my-awesome-api/
 
 </div>
 
-- 🔄 **PostgreSQL Integration**: Prisma ORM support
+- ✅ **PostgreSQL Integration**: Prisma ORM support
 - 🔄 **Fastify Framework**: High-performance alternative
 - 🔄 **Enhanced Customization**: Granular folder structure control
 - 🔄 **Template System**: Pre-built project templates
@@ -350,6 +361,20 @@ npm run dev
 ```
 
 Your API is now running with TypeScript, MongoDB connection, and ESLint configured!
+
+</details>
+
+<details>
+<summary><strong>🐘 Create a PostgreSQL API with Prisma</strong></summary>
+
+```bash
+npx create-node-spark@latest  
+# Select: TypeScript → Express → PostgreSQL → ESLint
+cd my-api
+npm run dev
+```
+
+Get a modern API with PostgreSQL, Prisma ORM, and full type safety!
 
 </details>
 
