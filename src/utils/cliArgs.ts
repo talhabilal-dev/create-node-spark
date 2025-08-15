@@ -11,7 +11,7 @@ export interface CliFlags {
     // Project configuration
     name?: string;
     language?: 'JavaScript' | 'TypeScript';
-    framework?: 'Express' | 'none';
+    framework?: 'Express' | 'Fastify' | 'none';
     database?: 'MongoDB' | 'MySQL' | 'PostgreSQL' | 'none';
     packageManager?: 'npm' | 'pnpm';    // Features
     eslint?: boolean;
@@ -82,6 +82,9 @@ export function parseCliArgs(args: string[]): ParsedArgs {
             case '--framework':
                 if (nextArg && nextArg.toLowerCase() === 'express') {
                     flags.framework = 'Express';
+                    i++;
+                } else if (nextArg && nextArg.toLowerCase() === 'fastify') {
+                    flags.framework = 'Fastify';
                     i++;
                 } else if (nextArg && nextArg.toLowerCase() === 'none') {
                     flags.framework = 'none';
@@ -224,7 +227,7 @@ ${colorize('Options:', colors.yellow + colors.bright)}
   ${colorize('Configuration:', colors.cyan)}
     ${colorize('--name', colors.green)} ${colorize('<name>', colors.blue)}           Project name (same as positional argument)
     ${colorize('--lang', colors.green)} ${colorize('<language>', colors.blue)}       Language: ${colorize('javascript', colors.white)}, ${colorize('js', colors.white)}, ${colorize('typescript', colors.white)}, ${colorize('ts', colors.white)}
-    ${colorize('--framework', colors.green)} ${colorize('<fw>', colors.blue)}        Framework: ${colorize('express', colors.white)}, ${colorize('none', colors.white)}
+    ${colorize('--framework', colors.green)} ${colorize('<fw>', colors.blue)}        Framework: ${colorize('express', colors.white)}, ${colorize('fastify', colors.white)}, ${colorize('none', colors.white)}
     ${colorize('--db', colors.green)} ${colorize('<database>', colors.blue)}         Database: ${colorize('mongodb', colors.white)}, ${colorize('mongo', colors.white)}, ${colorize('mysql', colors.white)}, ${colorize('postgresql', colors.white)}, ${colorize('postgres', colors.white)}, ${colorize('none', colors.white)}
     ${colorize('--pm', colors.green)} ${colorize('<manager>', colors.blue)}          Package manager: ${colorize('npm', colors.white)}, ${colorize('pnpm', colors.white)}
 
@@ -249,6 +252,9 @@ ${colorize('Examples:', colors.yellow + colors.bright)}
 
   ${colorize('# Full automation', colors.gray)}
   ${colorize('npx create-node-spark my-api', colors.green)} ${colorize('--lang ts --framework express --db mongodb --eslint --yes', colors.magenta)}
+
+  ${colorize('# Fastify + TypeScript setup', colors.gray)}
+  ${colorize('npx create-node-spark my-api', colors.green)} ${colorize('--lang ts --framework fastify --db postgresql --yes', colors.magenta)}
 
   ${colorize('# Partial configuration with prompts', colors.gray)}
   ${colorize('npx create-node-spark my-api', colors.green)} ${colorize('--lang typescript --framework express', colors.magenta)}
@@ -281,8 +287,8 @@ export function validateFlags(flags: CliFlags): { isValid: boolean; errors: stri
     }
 
     // Validate framework
-    if (flags.framework && !['Express', 'none'].includes(flags.framework)) {
-        errors.push(`Invalid framework: ${flags.framework}. Use 'express' or 'none'`);
+    if (flags.framework && !['Express', 'Fastify', 'none'].includes(flags.framework)) {
+        errors.push(`Invalid framework: ${flags.framework}. Use 'express', 'fastify', or 'none'`);
     }
 
     // Validate database

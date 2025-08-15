@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Flag validation: detailed error messages for invalid combinations
   - Modern CLI experience: flag patterns similar to Create React App/Vite
 
+  - **Fastify Framework Support**
+  - Full Fastify integration with TypeScript and JavaScript support
+  - Fastify-specific server configuration with proper async/await patterns
+  - Database integration: MongoDB, MySQL, and PostgreSQL work seamlessly with Fastify
+  - API route generation for PostgreSQL projects with Prisma integration
+  - Modern Fastify v5+ patterns with logger enabled by default
+  - Updated CLI flags: `--framework fastify` support
+  - Interactive prompts include Fastify as framework option
+  - Comprehensive error handling and JSON response patterns
+  - Host binding configuration for containerized deployments
+
 - **PostgreSQL + Prisma Integration**
   - Full PostgreSQL support with Prisma ORM
   - Pre-configured `prisma/schema.prisma` with User and Post models

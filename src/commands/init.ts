@@ -25,7 +25,7 @@ const project = async (flagBasedConfig?: Partial<ProjectDetails>, flags?: CliFla
       projectDetails = {
         projectName: flagBasedConfig.projectName || 'my-node-app',
         language: flagBasedConfig.language || 'JavaScript',
-        framework: flagBasedConfig.framework || 'Express',
+        framework: flagBasedConfig.framework || 'none',
         database: flagBasedConfig.database || 'none',
         packageManager: flagBasedConfig.packageManager || 'npm',
         features: flagBasedConfig.features || [],

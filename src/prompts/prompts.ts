@@ -70,7 +70,8 @@ async function askProjectDetails(prefilledConfig?: Partial<ProjectDetails>): Pro
       message: `${colors.brightYellow}🚀 Choose your web framework:${colors.reset}`,
       choices: [
         { name: `${colors.dim}⚪ None (Pure Node.js)${colors.reset}`, value: "none" },
-        { name: `${colors.brightGreen}🟢 Express.js${colors.reset}`, value: "Express" }
+        { name: `${colors.brightGreen}🟢 Express.js${colors.reset}`, value: "Express" },
+        { name: `${colors.brightCyan}⚡ Fastify${colors.reset}`, value: "Fastify" }
       ],
       default: "none",
     });

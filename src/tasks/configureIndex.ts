@@ -50,6 +50,42 @@ app.use('/api/users', userRoutes);
 const port = ENV.PORT || 3000;
 {{APP_LISTEN}};
                 `;
+        } else if (framework === "Fastify") {
+            indexContent = isTS
+                ? `
+import Fastify, { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import ENV from "./config/env.config";
+${database === 'MongoDB' ? `import connectDB from './config/db.config';` : database === 'MySQL' ? `import connectDB from './config/db.config';` : database === 'PostgreSQL' ? `import prisma from './config/db.config';` : ''}
+
+const fastify: FastifyInstance = Fastify({ logger: true });
+
+// Register routes
+fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
+  return { message: 'Hello from ${projectName} backend!' };
+});
+
+${database === 'PostgreSQL' ? `
+` : ''}
+const port: number = ENV.PORT || 3000;
+{{APP_LISTEN}};
+                `
+                : `
+import Fastify from 'fastify';
+import ENV from "./config/env.config.js";
+${database === 'MongoDB' ? `import connectDB from './config/db.config.js';` : database === 'MySQL' ? `import connectDB from './config/db.config.js';` : database === 'PostgreSQL' ? `import prisma from './config/db.config.js';` : ''}
+
+const fastify = Fastify({ logger: true });
+
+// Register routes
+fastify.get('/', async (request, reply) => {
+  return { message: 'Hello from ${projectName} backend!' };
+});
+
+${database === 'PostgreSQL' ? `
+` : ''}
+const port = ENV.PORT || 3000;
+{{APP_LISTEN}};
+                `;
         } else {
             indexContent = isTS
                 ? `
@@ -94,63 +130,181 @@ const port = ENV.PORT || 3000;
         let appListenLogic = '';
 
         if (database === 'MongoDB') {
-            appListenLogic = isTS
-                ? `
+            if (framework === 'Fastify') {
+                appListenLogic = isTS
+                    ? `
+connectDB().then(() => {
+    console.log('✅ Connected to DB');
+    fastify.listen({ port: port, host: '0.0.0.0' }, (err: any, address: string) => {
+        if (err) {
+            console.error('❌ Failed to start server:', err);
+            process.exit(1);
+        }
+        console.log(\`🚀 Server running at \${address}\`);
+    });
+}).catch((err: any) => {
+    console.error('❌ Failed to connect to DB:', err);
+});
+                    `
+                    : `
+connectDB().then(() => {
+    console.log('✅ Connected to DB');
+    fastify.listen({ port: port, host: '0.0.0.0' }, (err, address) => {
+        if (err) {
+            console.error('❌ Failed to start server:', err);
+            process.exit(1);
+        }
+        console.log(\`🚀 Server running at \${address}\`);
+    });
+}).catch((err) => {
+    console.error('❌ Failed to connect to DB:', err);
+});
+                    `;
+            } else {
+                appListenLogic = isTS
+                    ? `
 connectDB().then(() => {
     console.log('✅ Connected to DB');
     app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
 }).catch((err: any) => {
     console.error('❌ Failed to connect to DB:', err);
 });
-                `
-                : `
+                    `
+                    : `
 connectDB().then(() => {
     console.log('✅ Connected to DB');
     app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
 }).catch((err) => {
     console.error('❌ Failed to connect to DB:', err);
 });
-                `;
+                    `;
+            }
         } else if (database === 'MySQL') {
-            appListenLogic = isTS
-                ? `
+            if (framework === 'Fastify') {
+                appListenLogic = isTS
+                    ? `
+connectDB.raw('SELECT 1').then(() => {
+    console.log('✅ Connected to DB');
+    fastify.listen({ port: port, host: '0.0.0.0' }, (err: any, address: string) => {
+        if (err) {
+            console.error('❌ Failed to start server:', err);
+            process.exit(1);
+        }
+        console.log(\`🚀 Server running at \${address}\`);
+    });
+}).catch((err: any) => {
+    console.error('❌ Failed to connect to DB:', err);
+});
+                    `
+                    : `
+connectDB.raw('SELECT 1').then(() => {
+    console.log('✅ Connected to DB');
+    fastify.listen({ port: port, host: '0.0.0.0' }, (err, address) => {
+        if (err) {
+            console.error('❌ Failed to start server:', err);
+            process.exit(1);
+        }
+        console.log(\`🚀 Server running at \${address}\`);
+    });
+}).catch((err) => {
+    console.error('❌ Failed to connect to DB:', err);
+});
+                    `;
+            } else {
+                appListenLogic = isTS
+                    ? `
 connectDB.raw('SELECT 1').then(() => {
     console.log('✅ Connected to DB');
     app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
 }).catch((err: any) => {
     console.error('❌ Failed to connect to DB:', err);
 });
-                `
-                : `
+                    `
+                    : `
 connectDB.raw('SELECT 1').then(() => {
     console.log('✅ Connected to DB');
     app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
 }).catch((err) => {
     console.error('❌ Failed to connect to DB:', err);
 });
-                `;
+                    `;
+            }
         } else if (database === 'PostgreSQL') {
-            appListenLogic = isTS
-                ? `
+            if (framework === 'Fastify') {
+                appListenLogic = isTS
+                    ? `
+prisma.$connect().then(() => {
+    console.log('✅ Connected to PostgreSQL with Prisma');
+    fastify.listen({ port: port, host: '0.0.0.0' }, (err: any, address: string) => {
+        if (err) {
+            console.error('❌ Failed to start server:', err);
+            process.exit(1);
+        }
+        console.log(\`🚀 Server running at \${address}\`);
+    });
+}).catch((err: any) => {
+    console.error('❌ Failed to connect to PostgreSQL:', err);
+});
+                    `
+                    : `
+prisma.$connect().then(() => {
+    console.log('✅ Connected to PostgreSQL with Prisma');
+    fastify.listen({ port: port, host: '0.0.0.0' }, (err, address) => {
+        if (err) {
+            console.error('❌ Failed to start server:', err);
+            process.exit(1);
+        }
+        console.log(\`🚀 Server running at \${address}\`);
+    });
+}).catch((err) => {
+    console.error('❌ Failed to connect to PostgreSQL:', err);
+});
+                    `;
+            } else {
+                appListenLogic = isTS
+                    ? `
 prisma.$connect().then(() => {
     console.log('✅ Connected to PostgreSQL with Prisma');
     app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
 }).catch((err: any) => {
     console.error('❌ Failed to connect to PostgreSQL:', err);
 });
-                `
-                : `
+                    `
+                    : `
 prisma.$connect().then(() => {
     console.log('✅ Connected to PostgreSQL with Prisma');
     app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
 }).catch((err) => {
     console.error('❌ Failed to connect to PostgreSQL:', err);
 });
-                `;
+                    `;
+            }
         } else {
-            appListenLogic = `
+            if (framework === 'Fastify') {
+                appListenLogic = isTS
+                    ? `
+fastify.listen({ port: port, host: '0.0.0.0' }, (err: any, address: string) => {
+    if (err) {
+        console.error('❌ Failed to start server:', err);
+        process.exit(1);
+    }
+    console.log(\`🚀 Server running at \${address}\`);
+});
+                    `
+                    : `
+fastify.listen({ port: port, host: '0.0.0.0' }, (err, address) => {
+    if (err) {
+        console.error('❌ Failed to start server:', err);
+        process.exit(1);
+    }
+    console.log(\`🚀 Server running at \${address}\`);
+});
+                    `;
+            } else {
+                appListenLogic = `
 app.listen(port, () => console.log(\`🚀 Server running on port \${port}\`));
-            `;
+                `;
+            }
         }
 
         // 🪄 Replace the placeholder with the actual logic

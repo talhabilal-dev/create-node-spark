@@ -65,7 +65,7 @@ create-node-spark
 - **Language Choice**: JavaScript or TypeScript
 - **Package Manager**: npm or pnpm support
 - **Modern ES Modules**: No CommonJS legacy
-- **Framework Ready**: Express.js pre-configured
+- **Framework Ready**: Express.js & Fastify pre-configured
 - **Database Integration**: MongoDB, MySQL & PostgreSQL support
 - **Modern ORM**: Prisma integration for PostgreSQL
 - **File Uploads**: Optional Multer configuration
@@ -140,8 +140,8 @@ The CLI guides you through a seamless setup process:
 1. **📝 Project Name**: Choose your project identifier
 2. **📦 Package Manager**: Select npm or pnpm
 3. **💻 Language**: JavaScript or TypeScript
-4. **🚀 Framework**: Express.js or vanilla Node.js
-5. **🗄️ Database**: MongoDB, MySQL, or none
+4. **🚀 Framework**: Express.js, Fastify, or vanilla Node.js
+5. **🗄️ Database**: MongoDB, MySQL, PostgreSQL, or none
 6. **⚙️ Features**: ESLint, Multer, and more
 
 ## 📁 Generated Project Structure
@@ -166,11 +166,13 @@ Here’s what it sets up for you under the hood:
 
 - ✅ Uses modern ESM (ECMAScript Modules) — no old CommonJS clutter
 
-- ✅ Built on Express.js, one of the most popular and battle-tested Node.js frameworks
+- ✅ Built on Express.js & Fastify, popular and battle-tested Node.js frameworks
 
 - ✅ Pre-configured for MongoDB integration with Mongoose
 
 - ✅ Pre-configured for MySQL integration with Knex.js and mysql2
+
+- ✅ Pre-configured for PostgreSQL integration with Prisma ORM
 
 - ✅ Sets up environment variables (.env) out of the box
 
@@ -179,8 +181,6 @@ Here’s what it sets up for you under the hood:
 - ✅ Includes an optional ESLint setup to keep your codebase clean and consistent
 
 - ✅ Depends only on Inquirer (for CLI prompts) — keeping external dependencies light and minimal
-
-> **Note** :We plan to support additional frameworks (like Fastify) in the future to give developers even more flexibility.
 
 ## 📁 Generated Project Structure
 
@@ -260,8 +260,8 @@ my-awesome-api/
 
 - ✅ **Multi-language Support**: JavaScript & TypeScript
 - ✅ **Package Manager Choice**: npm & pnpm
-- ✅ **Framework Integration**: Express.js
-- ✅ **Database Support**: MongoDB & MySQL  
+- ✅ **Framework Integration**: Express.js & Fastify
+- ✅ **Database Support**: MongoDB, MySQL & PostgreSQL  
 - ✅ **Developer Tools**: ESLint & Prettier
 - ✅ **File Handling**: Multer integration
 - ✅ **Modern Standards**: ESM modules
@@ -276,7 +276,7 @@ my-awesome-api/
 </div>
 
 - ✅ **PostgreSQL Integration**: Prisma ORM support
-- 🔄 **Fastify Framework**: High-performance alternative
+- ✅ **Fastify Framework**: High-performance alternative
 - 🔄 **Enhanced Customization**: Granular folder structure control
 - 🔄 **Template System**: Pre-built project templates
 - 🔄 **Testing Setup**: Automated test configuration
@@ -369,12 +369,25 @@ Your API is now running with TypeScript, MongoDB connection, and ESLint configur
 
 ```bash
 npx create-node-spark@latest  
-# Select: TypeScript → Express → PostgreSQL → ESLint
+# Select: TypeScript → Express/Fastify → PostgreSQL → ESLint
 cd my-api
 npm run dev
 ```
 
 Get a modern API with PostgreSQL, Prisma ORM, and full type safety!
+
+</details>
+
+<details>
+<summary><strong>⚡ Create a Fastify API with TypeScript</strong></summary>
+
+```bash
+npx create-node-spark@latest my-fast-api --lang ts --framework fastify --db postgresql --yes
+cd my-fast-api
+npm run dev
+```
+
+Experience blazing-fast performance with Fastify and TypeScript!
 
 </details>
 
@@ -435,7 +448,7 @@ We welcome contributions from developers of all skill levels! Here's how you can
 
 ```bash
 # 1. Fork & clone the repository
-git clone https://github.com/YOUR_USERNAME/create-node-spark.git
+git clone https://github.com/talhabilal-dev/create-node-spark.git
 cd create-node-spark
 
 # 2. Install dependencies
@@ -499,11 +512,6 @@ This project is built with love and powered by these amazing technologies:
 <em>Runtime Engine</em>
 </td>
 <td align="center" width="20%">
-<img src="https://expressjs.com/images/express-facebook-share.png" alt="Express" width="50"><br>
-<strong>Express.js</strong><br>
-<em>Web Framework</em>
-</td>
-<td align="center" width="20%">
 <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" alt="TypeScript" width="50"><br>
 <strong>TypeScript</strong><br>
 <em>Type Safety</em>
@@ -518,430 +526,11 @@ This project is built with love and powered by these amazing technologies:
 <strong>MySQL</strong><br>
 <em>Database</em>
 </td>
+
+<td align="center" width="20%">
+<img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/postgresql/postgresql.png" alt="PostgreSQL" width="50"><br>
+<strong>PostgreSQL</strong><br>
+<em>Database</em>
+</td>
 </tr>
 </table>
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-<div align="center">
-
-**Made with ❤️ by developers, for developers**
-
----
-
-⭐ **Found this helpful? Consider giving us a star!** ⭐
-
-</div>
-
-## 📜 Changelog
-
-For detailed version history and updates, check the [CHANGELOG.md](./CHANGELOG.md).
-
----
-
-# 🤔 Why Use Create-Node-Spark?
-
-`create-node-spark` makes setting up a Node.js backend project quick and painless, so you can focus on the features that matter, not the boilerplate. Here’s why you should choose it:
-
-### ⚡ Save Time
-
-No more manually setting up project structure, dependencies, or config files. With just a single command, you get a fully scaffolded backend project ready to go.
-
-### 🛠️ Flexible
-
-Whether you're working with JavaScript or TypeScript, this tool adapts to your needs. Choose your preferred language when creating your project, and create-node-spark will scaffold accordingly.
-
-### 🌍 Minimal Dependencies
-
-Unlike many other tools that bring along bulky dependencies, create-node-spark only relies on Inquirer, keeping your project lean and focused. No unnecessary bloat.
-
-### 🔧 Customizable Setup
-
-Not only can you choose between JavaScript or TypeScript, but you also have the option to enable or skip ESLint and Multer setup based on your project needs.
-
-### 🚀 Quick Start
-
-Spend less time setting up your backend and more time coding. With create-node-spark, you can quickly jump into building your REST API, without the need for manual setup.
-
-### DataBase Integration
-
-create-node-spark supports MongoDB and MySQL integration. You can choose to set up MongoDB or MySQL integration with Mongoose or Knex.js and mysql2 respectively.
-
-### 🌱 Future-Proof
-
-We’re continuously working to add more features, including support for other frameworks like Fastify. The tool is built to grow alongside the Node.js ecosystem.
-
-### 🔥 Easy for Beginners & Experts
-
-Whether you’re just starting out or you're an experienced developer, create-node-spark offers a clean, organized starting point with flexibility. It's the best of both worlds — beginner-friendly yet flexible enough for advanced users.
-
-# 🔑 Key Features
-
-- **Choice of JavaScript or TypeScript**
-
-  Choose your preferred language for your backend project.Whether you want the simplicity of JavaScript or the power of TypeScript, create-node-spark handles both.
-
-- **REST API Scaffold**
-
-  Pre-configured for building REST APIs, giving you all the essentials to start developing your backend right away.
-
-- **Modern JavaScript with ESM**
-
-  Uses ECMAScript Modules (ESM), so you don’t need to worry about CommonJS quirks. Clean, modern code out of the box.
-
-- **Express Framework**
-
-  Scaffolds your project with Express.js, a fast, unopinionated, and minimal web framework that’s perfect for building scalable REST APIs.
-
-- **DataBase Integration**
-
-  Support for MongoDB integration with Mongoose and MySQL integration with Knex.js and mysql2
-
-- **Optional ESLint Setup**
-
-  Ensure your code stays clean and consistent with the optional ESLint setup. You can skip it if you prefer not to use it.
-
-- **Optional Multer Setup**
-
-  Configure Multer for file uploads, so you can quickly add file upload capabilities to your REST API.
-
-- **Minimal Dependencies**
-
-  Relies on just Inquirer, keeping the tool lightweight and avoiding unnecessary bloat. It does exactly what you need — and no more.
-
-- **Customizable Prompts**
-
-  Get options for language choice, ESLint setup , multer setup , and more during project creation, giving you full control over the final scaffolded project.
-
-- **Future-Ready**
-
-  With plans to add more frameworks like Fastify, this tool is always evolving to meet developers' needs.
-
-# 📦 Installation
-
-There are three easy ways to install create-node-spark. Choose the method that works best for you:
-
-**1. Using Direct NPX**
-
-The quickest way to get started is by running the following command directly from your terminal. This method does not require any installation:
-
-```bash
-npx create-node-spark@latest
-```
-
-This will always use the latest version of the tool without needing to install anything globally.
-
-**2. Using npm install**
-
-If you prefer to install it globally, you can use npm. Run the following command to install create-node-spark globally:
-
-```bash
-npm install -g create-node-spark
-```
-
-Once installed, you can run the tool from anywhere on your system using:
-
-```bash
-create-node-spark
-```
-
-**3. Cloning the Repository**
-
-- If you want to have full control over the source code or contribute to the project, you can clone the repository. Here’s how:
-
-Clone the repository to your local machine:
-
-```bash
-git clone https://github.com/talhabilal-dev/create-node-spark.git
-```
-
-- Navigate to the project directory:
-
-```bash
-cd create-node-spark
-```
-
-- Run the following commands to link the project globally and install dependencies:
-
-```bash
-npm link
-npm install -g
-```
-
-After this, you can use the tool globally just like the other installation methods.
-
-# 🚀 Usage
-
-![CreateNodeSpark Demo](https://res.cloudinary.com/dvdktrhsz/image/upload/v1755154754/2025-08-1410-59-54-ezgif.com-video-to-gif-converter_afyoyo.gif)
-
-Once create-node-spark is installed, using it is a breeze. Here’s how you can get started with scaffolding your new Node.js backend project:
-
-1. Run the Tool
-
-To create a new Node.js backend project, simply run the following command:
-
-```bash
-create-node-spark
-```
-
-You’ll be prompted with a few configuration options:
-
-**Choose the language**: Select either JavaScript or TypeScript for your project.
-
-**Enable additional features:** Choose whether or not to include ESLint for linting your code and multer for file upload.
-
-**Follow the Prompts**
-
-The CLI tool will walk you through the setup, asking for:
-
-Language selection (JavaScript or TypeScript)
-
-FrameWork selection (None or Express)
-
-DataBase selection (None or Mongodb or Mysql)
-
-> Additional Features (Press space to select, a to toggle all, i to invert selection)
-
-- Eslint
-- Multer
-
-After answering these prompts, the tool will automatically scaffold your new project, creating all necessary files and folder structure. 3. Start Developing
-
-![CreateNodeSpark Demo](https://res.cloudinary.com/dvdktrhsz/image/upload/v1755154752/img1_puiryt.png)
-
-Once the project has been generated, you can immediately start developing your API. The scaffolding includes a ready-to-go Express setup, with all the necessary configurations in place to help you hit the ground running.
-
-# 🎨 Example Output
-
-![CreateNodeSpark Demo](https://res.cloudinary.com/dvdktrhsz/image/upload/v1746865259/create-node-spark/sk1h7rrj0cynfgcshtcc.png)
-
-When you run create-node-spark, the tool scaffolds your project based on the choices you make. Here’s what the generated project will look like for different configurations:
-
-## JavaScript / TypeScript with Express
-
-If you choose Express as the framework, the tool will scaffold your project as follows:
-
-```bash
-my-node-project/
-├── public/
-│   ├── css/
-│   ├── js/
-│   ├── images/
-│   ├── temp/
-├── src/
-│   ├── config/
-│   ├── controllers/
-│   ├── middlewares/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   ├── services/
-│   └── index.js (or index.ts)
-├── package.json
-├── eslint.config.json (if ESLint is enabled)
-└── README.md
-```
-
-- src/index.js (or index.ts): This is the entry point to your app, where the Express server will be set up and started.
-
-- src/config/: Holds configuration files (e.g., database setup, environment variables).
-
-- src/controllers/: Contains your controller functions for handling business logic.
-
-- src/middlewares/: Custom middlewares that can be applied to your routes.
-
-- src/models/: Where your database models are stored (e.g., Mongoose models).
-
-- src/routes/: All your API route definitions.
-
-- src/utils/: Utility functions that can be used throughout the app.
-
-If ESLint is enabled, you’ll also get an eslint.config.json file for code quality.
-
-## JavaScript / TypeScript without Framework (HTTP server only)
-
-If you choose None (no framework), your project will be scaffolded as follows:
-
-```bash
-my-node-project/
-├── public/
-│   ├── css/
-│   ├── js/
-│   ├── images/
-│   ├── temp/
-├── src/
-│   ├── config/
-│   ├── controllers/
-│   ├── middlewares/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   ├── services/
-│   └── index.js (or index.ts)
-├── package.json
-├── .eslint.config.json (if ESLint is enabled)
-└── README.md
-```
-
-- src/index.js (or index.ts): This is the entry point where a simple HTTP server will be set up using the built-in http module (not Express).
-
-- src/config/, src/controllers/, src/middlewares/, src/models/, src/routes/, src/utils/: These folders remain the same as the Express version, allowing you to follow the same structure and best practices without the complexity of a framework.
-- No server-side framework is included, so you’ll have to manually set up routing, request handling, etc.
-
-# 🛣️ Project Roadmap
-
-We’re not just stopping at scaffolding Express + REST APIs — create-node-spark is built with the future in mind. Here’s what’s planned:
-
-## ✅ Phase 1 Completed
-
-- Scaffold projects with JavaScript or TypeScript
-
-- Optional ESLint configuration
-
-- Express support for REST APIs
-
-- ESM module system support
-
-- Lightweight, minimal dependency (inquirer only)
-
-- MongoDB integration setup (with Mongoose)
-
-- Mysql integration setup (with Knex.js and mysql2)
-
-- Support for setting up environment variables (.env) out of the box
-
-- Multer file upload integration setup
-
-## Phase 2 (In Progress)
-
-- PostgreSQL + Prisma integration setup
-
-- Add Fastify support (alternative to Express)
-
-- Improve folder structure customization (let users decide what they want scaffolded)
-
-## 🛠 Planned / Future Features
-
-- GraphQL API scaffold option
-
-- Docker support (generate Dockerfile + docker-compose)
-
-- Optional CI/CD pipeline configuration (GitHub Actions templates)
-
-- Extendable plugin system so users can write their own scaffolding extensions
-
-- Interactive project templates (e.g., pick between “Basic REST API,” “Auth API,” “CRUD API,” etc.)
-
-> We’re committed to making create-node-spark a go-to CLI tool for modern Node.js backend development, and the roadmap will grow as the community brings in feedback and ideas.
-
-# 🤝 Contributing
-
-We welcome contributions to create-node-spark — whether you’re fixing a bug, improving the docs, or adding a brand-new feature!
-
-### 🛑 Before You Start
-
-- Check the Issues tab: See if your bug/feature is already reported or requested.
-
-- Open a Discussion or Issue: Before working on big changes, open an issue or discussion so we can align on the approach.
-
-- Follow the roadmap: If you want to help with something already planned, comment on the related issue!
-
-### 🛠 How to Contribute
-
-#### 1️⃣ Fork the repository
-
-Click the fork button at the top of this repo to create your own copy.
-
-#### 2️⃣ Clone your fork
-
-```bash
-git clone https://github.com/talhabilal-dev/create-node-spark.git
-```
-
-#### 3️⃣ Create a new branch
-
-```bash
-git checkout -b feature/your-feature-name
-```
-
-#### 4️⃣ Install dependencies
-
-```bash
-npm install
-```
-
-#### 5️⃣ Make your changes
-
-Write clean, well-commented code. If you’re unsure about style or structure, look at the existing codebase for guidance.
-
-#### 6️⃣ Run tests (if available)
-
-If the project has tests, make sure they pass before submitting.
-
-#### 7️⃣ Commit and push
-
-```bash
-git add .
-git commit -m "Add: Your descriptive commit message"
-git push origin feature/your-feature-name
-```
-
-#### 8️⃣ Open a Pull Request
-
-Go to the GitHub repo and open a new pull request. Describe what you did and why.
-
-#### **💡 Tips for a Good Contribution**
-
-- ✅ Keep commits small and focused
-- ✅ Write clear, descriptive PR titles
-- ✅ Be respectful in reviews and discussions
-- ✅ Remember: We’re all here to improve the tool together!
-
-# 📄 License
-
-This project is licensed under the MIT License.
-
-📬 Contact & Community
-
-We’d love to connect with developers using or contributing to create-node-spark!
-🌎 Where to Reach Us
-
-- GitHub Issues → <https://github.com/talhabilal-dev/create-node-spark/issues>
-
-- Email → <contact@talhabilal.dev>
-
-If this project gets a lot of community traction, we plan to set up:
-
-- A Discord server or Slack group for real-time discussions
-
-- A newsletter or changelog updates for big releases
-
-We’re open to feedback, suggestions, and even just hearing how you’re using the tool!
-
-# 🙏 Acknowledgements
-
-This project stands on the shoulders of some amazing tools and libraries:
-
-- **Node.js** — The heart of backend development.
-
-- **Express** — The flexible, minimal framework we support out of the box.
-
-- **Inquirer** — For building interactive CLI prompts.
-
-- **ESLint** — Helping keep your code clean (if you choose to include it).
-
-- **Mongoose** — For MongoDB integration.
-
-- **Knex.js and mysql2** — For MySQL integration.
-
-- **Multer** — For file upload support.
-
-- **The open-source community** — For constant inspiration and pushing the ecosystem forward.
-
-> Special thanks to everyone who has contributed issues, discussions, or pull requests — you make create-node-spark better every day!
-
-## 📜 Changelog
-
-For detailed version history, check the [CHANGELOG.md](./CHANGELOG.md).

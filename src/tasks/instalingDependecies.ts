@@ -34,6 +34,13 @@ export async function installDependencies(args: DependencyConfig): Promise<void>
     } else {
       deps.development.push("nodemon");
     }
+  } else if (args.framework === "Fastify") {
+    deps.production.push("fastify", "dotenv");
+    if (isTS) {
+      deps.development.push("@types/node", "typescript", "tsx");
+    } else {
+      deps.development.push("nodemon");
+    }
   } else {
     // Raw Node.js still needs dotenv for .env support
     deps.production.push("dotenv");
