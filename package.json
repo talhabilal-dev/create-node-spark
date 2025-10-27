@@ -1,6 +1,6 @@
 {
   "name": "create-node-spark",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "CLI tool to scaffold a Node.js backend",
   "license": "MIT",
   "author": "talhabilal",
@@ -16,6 +16,9 @@
     "prepublishOnly": "npm run clean && npm run build",
     "test": "node dist/bin/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "nodejs",
     "cli",

@@ -6,16 +6,16 @@ import { promisify } from "util";
 
 const execPromise = promisify(exec);
 
-export async function setupPostgresPrisma(projectName: string, language: string, packageManager: 'npm' | 'pnpm'): Promise<void> {
-    try {
-        logDatabaseSetup("PostgreSQL with Prisma");
-        // Note: prisma and @prisma/client dependencies are now installed in installDependencies function
+export async function setupPostgresPrisma(projectName: string, language: string, packageManager: 'npm' | 'pnpm', framework: 'Express' | 'Fastify' | 'none' = 'Express'): Promise<void> {
+  try {
+    logDatabaseSetup("PostgreSQL with Prisma");
+    // Note: prisma and @prisma/client dependencies are now installed in installDependencies function
 
-        const extension = language === "TypeScript" ? "ts" : "js";
+    const extension = language === "TypeScript" ? "ts" : "js";
 
-        // Create Prisma schema file
-        const schemaPath = path.join(process.cwd(), "prisma", "schema.prisma");
-        const schemaContent = `// This is your Prisma schema file,
+    // Create Prisma schema file
+    const schemaPath = path.join(process.cwd(), "prisma", "schema.prisma");
+    const schemaContent = `// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
@@ -54,10 +54,10 @@ model Profile {
 }
 `;
 
-        // Create database configuration file
-        const configDbPath = path.join(process.cwd(), "src", "config", `db.config.${extension}`);
+    // Create database configuration file
+    const configDbPath = path.join(process.cwd(), "src", "config", `db.config.${extension}`);
 
-        const configDbContent = language === "TypeScript" ? `import { PrismaClient } from '@prisma/client';
+    const configDbContent = language === "TypeScript" ? `import { PrismaClient } from '@prisma/client';
 import ENV from "./env.config";
 
 declare global {
@@ -95,10 +95,10 @@ process.on('beforeExit', async () => {
 export default prisma;
 `;
 
-        // Create example service file
-        const servicePath = path.join(process.cwd(), "src", "services", `user.service.${extension}`);
+    // Create example service file
+    const servicePath = path.join(process.cwd(), "src", "services", `user.service.${extension}`);
 
-        const serviceContent = language === "TypeScript" ? `import prisma from '../config/db.config';
+    const serviceContent = language === "TypeScript" ? `import prisma from '../config/db.config';
 
 export interface CreateUserInput {
   email: string;
@@ -532,10 +532,10 @@ export class PostService {
 }
 `;
 
-        // Create example controller file
-        const controllerPath = path.join(process.cwd(), "src", "controllers", `user.controller.${extension}`);
+    // Create example controller file
+    const controllerPath = path.join(process.cwd(), "src", "controllers", `user.controller.${extension}`);
 
-        const controllerContent = language === "TypeScript" ? `import { Request, Response } from 'express';
+    const controllerContent = language === "TypeScript" ? `import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 
 export class UserController {
@@ -770,10 +770,13 @@ export class UserController {
 }
 `;
 
-        // Create example routes file
-        const routesPath = path.join(process.cwd(), "src", "routes", `user.routes.${extension}`);
+    // Create example routes file
+    const routesPath = path.join(process.cwd(), "src", "routes", `user.routes.${extension}`);
 
-        const routesContent = language === "TypeScript" ? `import { Router } from 'express';
+    let routesContent = '';
+
+    if (framework === 'Express') {
+      routesContent = language === "TypeScript" ? `import { Router } from 'express';
 import { UserController } from '../controllers/user.controller';
 
 const router = Router();
@@ -800,24 +803,294 @@ router.delete('/:id', UserController.deleteUser);
 
 export default router;
 `;
+    } else if (framework === 'Fastify') {
+      routesContent = language === "TypeScript" ? `import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import { UserService } from '../services/user.service';
 
-        // Write all files
-        await writeFile(schemaPath, schemaContent.trim(), "utf-8");
-        await writeFile(configDbPath, configDbContent.trim(), "utf-8");
-        await writeFile(servicePath, serviceContent.trim(), "utf-8");
-        await writeFile(controllerPath, controllerContent.trim(), "utf-8");
-        await writeFile(routesPath, routesContent.trim(), "utf-8");
+interface UserParams {
+  id: string;
+}
 
-        // Generate Prisma client
-        logInfo("🔧 Generating Prisma client...");
-        try {
-            await execPromise("npx prisma generate");
-            logSuccess("✅ Prisma client generated successfully!");
-        } catch (error) {
-            logInfo("⚠️  Prisma client generation will be available after npm install completes");
-        }
+interface CreateUserBody {
+  email: string;
+  name?: string;
+  bio?: string;
+}
 
+interface UpdateUserBody {
+  email?: string;
+  name?: string;
+}
+
+export default async function userRoutes(fastify: FastifyInstance) {
+  // GET /api/users
+  fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      const users = await UserService.getAllUsers();
+      return {
+        success: true,
+        data: users,
+      };
     } catch (error) {
-        throw error;
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error fetching users',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
+  });
+
+  // GET /api/users/:id
+  fastify.get<{ Params: UserParams }>('/:id', async (request, reply) => {
+    try {
+      const { id } = request.params;
+      const user = await UserService.getUserById(parseInt(id));
+      
+      if (!user) {
+        reply.status(404);
+        return {
+          success: false,
+          message: 'User not found',
+        };
+      }
+
+      return {
+        success: true,
+        data: user,
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error fetching user',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
+    }
+  });
+
+  // POST /api/users
+  fastify.post<{ Body: CreateUserBody }>('/', async (request, reply) => {
+    try {
+      const { email, name, bio } = request.body;
+      
+      if (!email) {
+        reply.status(400);
+        return {
+          success: false,
+          message: 'Email is required',
+        };
+      }
+
+      const user = await UserService.createUser({ email, name, bio });
+      
+      reply.status(201);
+      return {
+        success: true,
+        data: user,
+        message: 'User created successfully',
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error creating user',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
+    }
+  });
+
+  // PUT /api/users/:id
+  fastify.put<{ Params: UserParams; Body: UpdateUserBody }>('/:id', async (request, reply) => {
+    try {
+      const { id } = request.params;
+      const { email, name } = request.body;
+      
+      const user = await UserService.updateUser(parseInt(id), { email, name });
+      
+      return {
+        success: true,
+        data: user,
+        message: 'User updated successfully',
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error updating user',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
+    }
+  });
+
+  // DELETE /api/users/:id
+  fastify.delete<{ Params: UserParams }>('/:id', async (request, reply) => {
+    try {
+      const { id } = request.params;
+      
+      await UserService.deleteUser(parseInt(id));
+      
+      return {
+        success: true,
+        message: 'User deleted successfully',
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error deleting user',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
+    }
+  });
+}
+` : `export default async function userRoutes(fastify) {
+  // GET /api/users
+  fastify.get('/', async (request, reply) => {
+    try {
+      const { UserService } = await import('../services/user.service.js');
+      const users = await UserService.getAllUsers();
+      return {
+        success: true,
+        data: users,
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error fetching users',
+        error: error.message || 'Unknown error',
+      };
+    }
+  });
+
+  // GET /api/users/:id
+  fastify.get('/:id', async (request, reply) => {
+    try {
+      const { UserService } = await import('../services/user.service.js');
+      const { id } = request.params;
+      const user = await UserService.getUserById(parseInt(id));
+      
+      if (!user) {
+        reply.status(404);
+        return {
+          success: false,
+          message: 'User not found',
+        };
+      }
+
+      return {
+        success: true,
+        data: user,
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error fetching user',
+        error: error.message || 'Unknown error',
+      };
+    }
+  });
+
+  // POST /api/users
+  fastify.post('/', async (request, reply) => {
+    try {
+      const { UserService } = await import('../services/user.service.js');
+      const { email, name, bio } = request.body;
+      
+      if (!email) {
+        reply.status(400);
+        return {
+          success: false,
+          message: 'Email is required',
+        };
+      }
+
+      const user = await UserService.createUser({ email, name, bio });
+      
+      reply.status(201);
+      return {
+        success: true,
+        data: user,
+        message: 'User created successfully',
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error creating user',
+        error: error.message || 'Unknown error',
+      };
+    }
+  });
+
+  // PUT /api/users/:id
+  fastify.put('/:id', async (request, reply) => {
+    try {
+      const { UserService } = await import('../services/user.service.js');
+      const { id } = request.params;
+      const { email, name } = request.body;
+      
+      const user = await UserService.updateUser(parseInt(id), { email, name });
+      
+      return {
+        success: true,
+        data: user,
+        message: 'User updated successfully',
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error updating user',
+        error: error.message || 'Unknown error',
+      };
+    }
+  });
+
+  // DELETE /api/users/:id
+  fastify.delete('/:id', async (request, reply) => {
+    try {
+      const { UserService } = await import('../services/user.service.js');
+      const { id } = request.params;
+      
+      await UserService.deleteUser(parseInt(id));
+      
+      return {
+        success: true,
+        message: 'User deleted successfully',
+      };
+    } catch (error) {
+      reply.status(500);
+      return {
+        success: false,
+        message: 'Error deleting user',
+        error: error.message || 'Unknown error',
+      };
+    }
+  });
+}
+`;
+    }
+
+    // Write all files
+    await writeFile(schemaPath, schemaContent.trim(), "utf-8");
+    await writeFile(configDbPath, configDbContent.trim(), "utf-8");
+    await writeFile(servicePath, serviceContent.trim(), "utf-8");
+    await writeFile(controllerPath, controllerContent.trim(), "utf-8");
+    await writeFile(routesPath, routesContent.trim(), "utf-8");
+
+    // Generate Prisma client
+    logInfo("🔧 Generating Prisma client...");
+    try {
+      await execPromise("npx prisma generate");
+      logSuccess("✅ Prisma client generated successfully!");
+    } catch (error) {
+      logInfo("⚠️  Prisma client generation will be available after npm install completes");
+    }
+
+  } catch (error) {
+    throw error;
+  }
 }

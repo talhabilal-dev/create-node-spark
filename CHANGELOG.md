@@ -5,7 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.6.0] - 2025-08-14
+## [2.6.1] - 2025-10-27
+
+### 🐛 Fixed
+
+- **Project Name Validation Consistency**
+  - Fixed inconsistency between prompt and CLI flag validation patterns
+  - Both now consistently require lowercase letters, numbers, hyphens, and underscores only
+  - Updated `cliArgs.ts` validation to match prompt validation rules
+  - Prevents confusing validation errors when using different input methods
+
+- **Async File Operations**
+  - Added missing `await` keywords to `writeFile` operations in:
+    - `setupMongoDb.ts` - Database configuration file creation
+    - `setupSql.ts` - MySQL database configuration file creation
+    - `setupEnv.ts` - Environment files (.env and env.config) creation
+  - Prevents potential race conditions and ensures proper file write completion
+  - Improves reliability during project scaffolding
+
+- **TypeScript Type Safety**
+  - Replaced `any` type with proper `EnvironmentConfig` interface in env.config files
+  - Added comprehensive interface definition with all supported environment variables
+  - Generated TypeScript projects now have full type safety for environment configuration
+  - Better IDE autocomplete and compile-time error detection
+  - Updated both `src/types/index.ts` and `src/tasks/setupEnv.ts`
+
+- **Fastify Route Generation for PostgreSQL**
+  - Fixed PostgreSQL + Fastify projects generating Express-style routes
+  - Now correctly generates Fastify plugin-based routes with proper typing
+  - Added framework parameter to `setupPostgresPrisma` function
+  - Fastify routes use async plugin pattern instead of Express Router
+  - Properly registers routes in index.ts using `fastify.register()`
+  - Updated files: `setupPostgresPrisma.ts`, `init.ts`, `configureIndex.ts`
+
+- **Silent Mode Implementation**
+  - Fixed `--silent` flag not suppressing all non-error output
+  - Implemented global silent mode configuration in logger utilities
+  - Added `setSilentMode()` function to control logger behavior
+  - All logger functions now respect silent mode (except errors, which are always shown)
+  - Improved CI/CD integration with proper silent execution
+  - Updated `logger.ts`, `bin/index.ts`, and `commands/init.ts`
+
+### 📝 Documentation
+
+- Added comprehensive `BUG_FIXES.md` documenting all fixes
+- Includes before/after code examples and testing recommendations
+- Detailed impact analysis for each bug fix
+
+## [2.6.0]
 
 ### 🚀 Added
 
@@ -96,7 +143,7 @@ npx create-node-spark my-api --pm pnpm --yes
 
 ---
 
-## [2.5.0] - 2025-08-1 to 2025-08-14
+## [2.5.0]
 
 ### Added
 
@@ -110,7 +157,7 @@ npx create-node-spark my-api --pm pnpm --yes
 - **Script Generation**: Generated package.json scripts now use the appropriate package manager commands
 - **Setup Tasks**: All setup tasks (ESLint, Multer, Database) now use the selected package manager consistently
 
-## [2.4.1] - 2025-08-13
+## [2.4.1]
 
 ### Added
 
@@ -138,7 +185,7 @@ npx create-node-spark my-api --pm pnpm --yes
 - **File Targeting** – Lint commands now focus on `src/` and skip compiled output (`dist/`).
 - **Plugin Compatibility** – Fixed conflicts between ESLint core, TypeScript ESLint plugin, and Node/Promise plugins.
 
-## [2.4.0] - 2025-08-12
+## [2.4.0]
 
 ### Changed
 
@@ -168,7 +215,7 @@ npx create-node-spark my-api --pm pnpm --yes
 - Improved error handling in CLI prompts and task execution
 - Corrected exec command calls to remove invalid stdio options
 
-## [2.3.0] - 2025-05-10
+## [2.3.0]
 
 ### Added
 
@@ -185,7 +232,7 @@ npx create-node-spark my-api --pm pnpm --yes
 
 - Minor bug fixes related to database connection handling
 
-## [2.2.0] - 2025-05-09
+## [2.2.0]
 
 ### Added
 
@@ -203,7 +250,7 @@ npx create-node-spark my-api --pm pnpm --yes
 - Cleaned up and enhanced overall folder structure for better scalability
 - Improved code organization and maintainability
 
-## [2.1.0] - 2025-05-08
+## [2.1.0]
 
 ### Added
 
@@ -220,7 +267,7 @@ npx create-node-spark my-api --pm pnpm --yes
 
 - Minor code cleanups and internal improvements
 
-## [2.0.0] - 2025-05-06
+## [2.0.0]
 
 ### Added
 
@@ -239,7 +286,7 @@ npx create-node-spark my-api --pm pnpm --yes
 - Focused on clean, minimal scaffolding approach
 - Better separation of concerns in generated projects
 
-## [1.1.0] - 2025-05-04
+## [1.1.0]
 
 ### Added
 
@@ -257,13 +304,13 @@ npx create-node-spark my-api --pm pnpm --yes
 - Better project organization and scalability
 - Enhanced development workflow with linting support
 
-## [1.0.1] - 2025-05-03
+## [1.0.1]
 
 ### Fixed
 
 - Minor bug fixes and stability improvements
 
-## [1.0.0] - 2025-05-03
+## [1.0.0]
 
 ### Added
 

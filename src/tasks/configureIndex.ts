@@ -55,7 +55,7 @@ const port = ENV.PORT || 3000;
                 ? `
 import Fastify, { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import ENV from "./config/env.config";
-${database === 'MongoDB' ? `import connectDB from './config/db.config';` : database === 'MySQL' ? `import connectDB from './config/db.config';` : database === 'PostgreSQL' ? `import prisma from './config/db.config';` : ''}
+${database === 'MongoDB' ? `import connectDB from './config/db.config';` : database === 'MySQL' ? `import connectDB from './config/db.config';` : database === 'PostgreSQL' ? `import prisma from './config/db.config';\nimport userRoutes from './routes/user.routes';` : ''}
 
 const fastify: FastifyInstance = Fastify({ logger: true });
 
@@ -64,7 +64,8 @@ fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
   return { message: 'Hello from ${projectName} backend!' };
 });
 
-${database === 'PostgreSQL' ? `
+${database === 'PostgreSQL' ? `// API Routes
+fastify.register(userRoutes, { prefix: '/api/users' });
 ` : ''}
 const port: number = ENV.PORT || 3000;
 {{APP_LISTEN}};
@@ -72,7 +73,7 @@ const port: number = ENV.PORT || 3000;
                 : `
 import Fastify from 'fastify';
 import ENV from "./config/env.config.js";
-${database === 'MongoDB' ? `import connectDB from './config/db.config.js';` : database === 'MySQL' ? `import connectDB from './config/db.config.js';` : database === 'PostgreSQL' ? `import prisma from './config/db.config.js';` : ''}
+${database === 'MongoDB' ? `import connectDB from './config/db.config.js';` : database === 'MySQL' ? `import connectDB from './config/db.config.js';` : database === 'PostgreSQL' ? `import prisma from './config/db.config.js';\nimport userRoutes from './routes/user.routes.js';` : ''}
 
 const fastify = Fastify({ logger: true });
 
@@ -81,7 +82,8 @@ fastify.get('/', async (request, reply) => {
   return { message: 'Hello from ${projectName} backend!' };
 });
 
-${database === 'PostgreSQL' ? `
+${database === 'PostgreSQL' ? `// API Routes
+fastify.register(userRoutes, { prefix: '/api/users' });
 ` : ''}
 const port = ENV.PORT || 3000;
 {{APP_LISTEN}};

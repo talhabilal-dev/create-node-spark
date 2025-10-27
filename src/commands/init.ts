@@ -41,9 +41,7 @@ const project = async (flagBasedConfig?: Partial<ProjectDetails>, flags?: CliFla
       projectDetails = await askProjectDetails();
     }
 
-    if (!flags?.silent) {
-      logHeader("Building Your Project");
-    }
+    logHeader("Building Your Project");
 
     logStep(1, 6, "Setting up npm and project structure");
     await setupNpm(projectDetails.projectName, projectDetails.language, projectDetails.packageManager);
@@ -82,7 +80,7 @@ const project = async (flagBasedConfig?: Partial<ProjectDetails>, flags?: CliFla
       }
 
       if (projectDetails.database === 'PostgreSQL') {
-        await setupPostgresPrisma(projectDetails.projectName, projectDetails.language, projectDetails.packageManager);
+        await setupPostgresPrisma(projectDetails.projectName, projectDetails.language, projectDetails.packageManager, projectDetails.framework);
       }
 
       await configureIndex(projectDetails.projectName, projectDetails.language, projectDetails.framework, projectDetails.database);

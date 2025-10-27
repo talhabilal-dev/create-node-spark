@@ -301,9 +301,9 @@ export function validateFlags(flags: CliFlags): { isValid: boolean; errors: stri
         errors.push(`Invalid package manager: ${flags.packageManager}. Use 'npm' or 'pnpm'`);
     }
 
-    // Validate project name
-    if (flags.name && !/^[a-zA-Z0-9-_]+$/.test(flags.name)) {
-        errors.push(`Invalid project name: ${flags.name}. Use only letters, numbers, hyphens, and underscores`);
+    // Validate project name (must be lowercase letters, numbers, hyphens, and underscores only)
+    if (flags.name && !/^[a-z0-9\-_]+$/.test(flags.name)) {
+        errors.push(`Invalid project name: ${flags.name}. Use only lowercase letters, numbers, hyphens, and underscores`);
     }
 
     return {

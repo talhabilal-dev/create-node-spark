@@ -47,7 +47,7 @@ const connectDB = () => {
 export default connectDB();
 `;
 
-    writeFile(configDbPath, configDbContent.trim(), "utf-8")
+    await writeFile(configDbPath, configDbContent.trim(), "utf-8");
 
   }
 

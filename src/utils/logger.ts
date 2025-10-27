@@ -33,6 +33,17 @@ const colors = {
     bgWhite: '\x1b[47m'
 };
 
+// Logger configuration
+let silentMode = false;
+
+function setSilentMode(silent: boolean): void {
+    silentMode = silent;
+}
+
+function isSilent(): boolean {
+    return silentMode;
+}
+
 // ASCII Art for the CLI
 const asciiArt = {
     logo: `
@@ -65,62 +76,74 @@ ${colors.reset}`,
 
 // Enhanced logging functions
 function log(message: string): void {
+    if (silentMode) return;
     console.log(message);
 }
 
 function logBanner(): void {
+    if (silentMode) return;
     console.clear();
     console.log(asciiArt.logo);
     console.log();
 }
 
 function logSuccess(message: string, withIcon: boolean = true): void {
+    if (silentMode) return;
     const icon = withIcon ? `${asciiArt.checkmark} ` : '';
     console.log(`${colors.brightGreen}${icon}${message}${colors.reset}`);
 }
 
 function logError(message: string | Error, withIcon: boolean = true): void {
+    // Always show errors, even in silent mode
     const errorMessage = message instanceof Error ? message.message : message;
     const icon = withIcon ? `${asciiArt.crossmark} ` : '';
     console.error(`${colors.brightRed}${icon}${errorMessage}${colors.reset}`);
 }
 
 function logWarning(message: string, withIcon: boolean = true): void {
+    if (silentMode) return;
     const icon = withIcon ? `${asciiArt.warning} ` : '';
     console.log(`${colors.brightYellow}${icon}${message}${colors.reset}`);
 }
 
 function logInfo(message: string, withIcon: boolean = true): void {
+    if (silentMode) return;
     const icon = withIcon ? `${asciiArt.info} ` : '';
     console.log(`${colors.brightCyan}${icon}${message}${colors.reset}`);
 }
 
 function logStep(step: number, total: number, message: string): void {
+    if (silentMode) return;
     const progress = `${colors.dim}[${step}/${total}]${colors.reset}`;
     console.log(`${progress} ${colors.brightMagenta}${message}${colors.reset}`);
 }
 
 function logSeparator(): void {
+    if (silentMode) return;
     console.log(`${colors.dim}${'─'.repeat(65)}${colors.reset}`);
 }
 
 function logHeader(title: string): void {
+    if (silentMode) return;
     console.log();
     console.log(`${colors.bright}${colors.brightCyan}▓▓▓ ${title.toUpperCase()} ▓▓▓${colors.reset}`);
     logSeparator();
 }
 
 function logProgress(message: string, icon: string = asciiArt.gear): void {
+    if (silentMode) return;
     console.log(`${icon} ${colors.brightBlue}${message}${colors.reset}`);
 }
 
 function logFeature(feature: string, enabled: boolean = true): void {
+    if (silentMode) return;
     const status = enabled ? asciiArt.checkmark : asciiArt.crossmark;
     const color = enabled ? colors.brightGreen : colors.dim;
     console.log(`  ${status} ${color}${feature}${colors.reset}`);
 }
 
 function logProjectComplete(projectName: string): void {
+    if (silentMode) return;
     console.log();
     console.log(`${colors.brightGreen}╔═══════════════════════════════════════════════════════════════╗${colors.reset}`);
     console.log(`${colors.brightGreen}║${colors.reset}  ${colors.brightGreen}${colors.reset}`);
@@ -140,14 +163,17 @@ function logProjectComplete(projectName: string): void {
 }
 
 function logInstalling(packageName: string): void {
+    if (silentMode) return;
     console.log(`${asciiArt.package} ${colors.brightBlue}Installing ${colors.brightWhite}${packageName}${colors.brightBlue}...${colors.reset}`);
 }
 
 function logCreatingFolder(folderName: string): void {
+    if (silentMode) return;
     console.log(`${asciiArt.folder} ${colors.brightYellow}Creating folder: ${colors.brightWhite}${folderName}${colors.reset}`);
 }
 
 function logDatabaseSetup(dbType: string): void {
+    if (silentMode) return;
     console.log(`${asciiArt.database} ${colors.brightGreen}Setting up ${colors.brightWhite}${dbType}${colors.brightGreen} database...${colors.reset}`);
 }
 
@@ -167,6 +193,7 @@ export {
     logInstalling,
     logCreatingFolder,
     logDatabaseSetup,
+    setSilentMode,
     asciiArt,
     colors
 };

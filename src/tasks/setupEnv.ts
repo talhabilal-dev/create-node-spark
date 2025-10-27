@@ -27,7 +27,7 @@ DATABASE_URL="postgresql://username:password@localhost:5432/your_database_name"\
 
         const envPath = path.join(process.cwd(), ".env");
 
-        writeFile(envPath, envContent.trim(), "utf-8")
+        await writeFile(envPath, envContent.trim(), "utf-8");
 
 
         const configEnvPath = path.join(process.cwd(), "src", "config", `env.config.${extension}`);
@@ -52,7 +52,18 @@ DATABASE_URL="postgresql://username:password@localhost:5432/your_database_name"\
         
         dotenv.config();
 
-        const ENV : any = {
+        interface EnvironmentConfig {
+            PORT: number | string;
+            MONGO_URI?: string;
+            MYSQL_HOST?: string;
+            MYSQL_PORT?: number | string;
+            MYSQL_DATABASE?: string;
+            MYSQL_USER?: string;
+            MYSQL_PASSWORD?: string;
+            DATABASE_URL?: string;
+        }
+
+        const ENV: EnvironmentConfig = {
 ${envConfigObject}};
 
 export default ENV;
@@ -70,7 +81,7 @@ export default ENV;
 
         `;
 
-        writeFile(configEnvPath, configEnvContent.trim(), "utf-8")
+        await writeFile(configEnvPath, configEnvContent.trim(), "utf-8");
 
     }
 
