@@ -191,16 +191,23 @@ export function createProjectDetailsFromFlags(flags: CliFlags): Partial<ProjectD
     if (flags.multer === true) features.push('multer');
     if (flags.docker === true) features.push('docker');
 
-    return {
+    const result: Partial<ProjectDetails> = {
         projectName: flags.name,
         language: flags.language,
         framework: flags.framework,
         database: flags.database,
         packageManager: flags.packageManager,
-        features,
     };
+
+    // Only include features if any feature flags were explicitly set
+    if (flags.eslint !== undefined || flags.multer !== undefined || flags.docker !== undefined) {
+        result.features = features;
+    }
+
+    return result;
 }
 
+// ANSI color codes for terminal output
 // ANSI color codes for terminal output
 const colors = {
     reset: '\x1b[0m',

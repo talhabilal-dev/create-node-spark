@@ -104,6 +104,7 @@ async function askProjectDetails(prefilledConfig?: Partial<ProjectDetails>): Pro
 
   // Ask for features separately (after basic configuration)
   if (!prefilledConfig?.features) {
+    console.log(`${colors.dim}Press space to select, enter to confirm${colors.reset}`);
     const featuresAnswer = await inquirer.prompt([{
       type: "checkbox",
       name: "features",
