@@ -1,6 +1,6 @@
 {
   "name": "create-node-spark",
-  "version": "2.6.1",
+  "version": "2.7.0",
   "description": "CLI tool to scaffold a Node.js backend",
   "license": "MIT",
   "author": "talhabilal",
@@ -25,9 +25,14 @@
     "scaffolding",
     "backend",
     "express",
+    "fastify",
     "mongoose",
     "mongodb",
-    "auth",
+    "mysql",
+    "postgresql",
+    "prisma",
+    "docker",
+    "containerization",
     "multer",
     "api",
     "create-node-backend",
@@ -46,10 +51,11 @@
   "homepage": "https://github.com/talhabilal-dev/create-node-spark#readme",
   "dependencies": {
     "@types/inquirer": "^9.0.9",
-    "inquirer": "^12.9.1"
+    "inquirer": "^12.11.1"
   },
   "devDependencies": {
-    "@types/node": "^24.2.1",
-    "typescript": "^5.9.2"
-  }
+    "@types/node": "^24.10.13",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@10.25.0+sha512.5e82639027af37cf832061bcc6d639c219634488e0f2baebe785028a793de7b525ffcd3f7ff574f5e9860654e098fe852ba8ac5dd5cefe1767d23a020a92f501"
 }

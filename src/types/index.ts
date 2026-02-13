@@ -4,7 +4,7 @@ export interface ProjectDetails {
     language: 'JavaScript' | 'TypeScript';
     framework: 'none' | 'Express' | 'Fastify';
     database: 'none' | 'MongoDB' | 'MySQL' | 'PostgreSQL';
-    features: ('eslint' | 'multer')[];
+    features: ('eslint' | 'multer' | 'docker')[];
 }
 
 export interface DependencyConfig extends ProjectDetails {

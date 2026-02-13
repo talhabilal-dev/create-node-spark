@@ -93,9 +93,18 @@ async function askProjectDetails(prefilledConfig?: Partial<ProjectDetails>): Pro
     });
   }
 
-  // Only ask for features if not provided via flags (or partially provided)
+  let answers: any = {};
+
+  // Only prompt if there are questions to ask
+  if (questions.length > 0) {
+    console.log(`${colors.dim}Use arrow keys to navigate, space to select, and enter to confirm${colors.reset}`);
+    console.log();
+    answers = await inquirer.prompt(questions as any);
+  }
+
+  // Ask for features separately (after basic configuration)
   if (!prefilledConfig?.features) {
-    questions.push({
+    const featuresAnswer = await inquirer.prompt([{
       type: "checkbox",
       name: "features",
       message: `${colors.brightMagenta}✨ Select additional features:${colors.reset}`,
@@ -107,19 +116,15 @@ async function askProjectDetails(prefilledConfig?: Partial<ProjectDetails>): Pro
         {
           name: `${colors.brightCyan}📁 Multer (File Uploads)${colors.reset}`,
           value: "multer"
+        },
+        {
+          name: `${colors.brightBlue}🐳 Docker (Containerization)${colors.reset}`,
+          value: "docker"
         }
       ],
       default: [],
-    });
-  }
-
-  let answers: any = {};
-
-  // Only prompt if there are questions to ask
-  if (questions.length > 0) {
-    console.log(`${colors.dim}Use arrow keys to navigate, space to select, and enter to confirm${colors.reset}`);
-    console.log();
-    answers = await inquirer.prompt(questions as any);
+    }]);
+    answers.features = featuresAnswer.features;
   }
 
   // Merge prefilled config with answers

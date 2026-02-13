@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2026-02-13
+
+### 🚀 Added
+
+- **Docker Containerization Support**
+  - Full Docker integration with production-ready multi-stage builds
+  - Automatic generation of optimized `Dockerfile` based on language and framework
+  - Development `Dockerfile.dev` with hot-reload support
+  - Comprehensive `.dockerignore` for optimized image sizes
+  - `docker-compose.yml` generation for database integration (MongoDB, MySQL, PostgreSQL)
+  - Docker-specific npm/pnpm scripts in package.json:
+    - `docker:build` - Build production Docker image
+    - `docker:run` - Run production container
+    - `docker:dev` - Run development container with volume mounting
+    - `docker:up` - Start docker-compose services (when database selected)
+    - `docker:down` - Stop docker-compose services
+    - `docker:logs` - View container logs
+    - `docker:restart` - Restart services
+  - Security best practices:
+    - Non-root user execution
+    - Multi-stage builds for minimal image size
+    - Health checks for containers
+  - CLI support: `--docker` flag and interactive prompt option
+  - Changed color scheme of CLI
+  - Works seamlessly with TypeScript/JavaScript, Express/Fastify, and all database options
+  - Database containers with health checks and persistent volumes
+  - Network isolation and proper service dependencies
+
+### 🛠 Changed
+
+- Updated package.json version to 2.7.0
+- Enhanced keywords for better npm discoverability (docker, containerization, etc.)
+- Modified project step counting to include Docker setup
+- Extended feature selection in interactive prompts
+
+### ✨ Improved
+
+- Better separation of development and production Docker configurations
+- Optimized Docker images with layer caching
+- Automatic environment variable configuration for containerized databases
+- Alpine-based images for smaller footprint
+- Volume mounting for development to enable hot-reload
+
 ## [2.6.1] - 2025-10-27
 
 ### 🐛 Fixed

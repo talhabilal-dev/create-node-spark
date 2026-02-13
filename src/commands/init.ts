@@ -9,6 +9,7 @@ import { setupMongoDb } from "../tasks/setupMongoDb.js";
 import { setupSql } from "../tasks/setupSql.js";
 import { setupPostgresPrisma } from "../tasks/setupPostgresPrisma.js";
 import { configureMulter } from "../tasks/configureMulter.js";
+import { setupDocker } from "../tasks/setupDocker.js";
 import { ProjectDetails } from "../types/index.js";
 import { logHeader, logStep, logFeature, logInfo } from "../utils/logger.js";
 import { CliFlags } from "../utils/cliArgs.js";
@@ -53,6 +54,7 @@ const project = async (flagBasedConfig?: Partial<ProjectDetails>, flags?: CliFla
     const totalSteps = 6 +
       (projectDetails.features.includes('eslint') ? 1 : 0) +
       (projectDetails.features.includes('multer') ? 1 : 0) +
+      (projectDetails.features.includes('docker') ? 1 : 0) +
       (projectDetails.database !== 'none' ? 1 : 0);
 
     if (projectDetails.features.includes('eslint')) {
@@ -63,6 +65,11 @@ const project = async (flagBasedConfig?: Partial<ProjectDetails>, flags?: CliFla
     if (projectDetails.features.includes('multer')) {
       logStep(stepCount++, totalSteps, "Setting up Multer for file uploads");
       await configureMulter(projectDetails.language, projectDetails.packageManager);
+    }
+
+    if (projectDetails.features.includes('docker')) {
+      logStep(stepCount++, totalSteps, "Setting up Docker containerization");
+      await setupDocker(projectDetails.projectName, projectDetails.language, projectDetails.framework, projectDetails.database, projectDetails.packageManager);
     }
 
     logStep(stepCount++, totalSteps, "Creating folder structure");

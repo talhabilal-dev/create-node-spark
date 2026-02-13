@@ -16,6 +16,7 @@ export interface CliFlags {
     packageManager?: 'npm' | 'pnpm';    // Features
     eslint?: boolean;
     multer?: boolean;
+    docker?: boolean;
 
     // Utility flags
     help?: boolean;
@@ -134,6 +135,12 @@ export function parseCliArgs(args: string[]): ParsedArgs {
             case '--no-multer':
                 flags.multer = false;
                 break;
+            case '--docker':
+                flags.docker = true;
+                break;
+            case '--no-docker':
+                flags.docker = false;
+                break;
 
             // Utility flags
             case '-y':
@@ -178,10 +185,11 @@ export function parseCliArgs(args: string[]): ParsedArgs {
 }
 
 export function createProjectDetailsFromFlags(flags: CliFlags): Partial<ProjectDetails> {
-    const features: ('eslint' | 'multer')[] = [];
+    const features: ('eslint' | 'multer' | 'docker')[] = [];
 
     if (flags.eslint === true) features.push('eslint');
     if (flags.multer === true) features.push('multer');
+    if (flags.docker === true) features.push('docker');
 
     return {
         projectName: flags.name,
@@ -236,6 +244,8 @@ ${colorize('Options:', colors.yellow + colors.bright)}
     ${colorize('--no-eslint', colors.red)}            Disable ESLint configuration
     ${colorize('--multer', colors.green)}               Enable Multer for file uploads
     ${colorize('--no-multer', colors.red)}            Disable Multer
+    ${colorize('--docker', colors.green)}               Enable Docker containerization
+    ${colorize('--no-docker', colors.red)}            Disable Docker
 
   ${colorize('Automation:', colors.cyan)}
     ${colorize('--yes', colors.green)}, ${colorize('-y', colors.green)}              Skip all prompts and use defaults

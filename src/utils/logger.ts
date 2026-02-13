@@ -90,32 +90,32 @@ function logBanner(): void {
 function logSuccess(message: string, withIcon: boolean = true): void {
     if (silentMode) return;
     const icon = withIcon ? `${asciiArt.checkmark} ` : '';
-    console.log(`${colors.brightGreen}${icon}${message}${colors.reset}`);
+    console.log(`${icon}${message}`);
 }
 
 function logError(message: string | Error, withIcon: boolean = true): void {
     // Always show errors, even in silent mode
     const errorMessage = message instanceof Error ? message.message : message;
     const icon = withIcon ? `${asciiArt.crossmark} ` : '';
-    console.error(`${colors.brightRed}${icon}${errorMessage}${colors.reset}`);
+    console.error(`${icon}${errorMessage}`);
 }
 
 function logWarning(message: string, withIcon: boolean = true): void {
     if (silentMode) return;
     const icon = withIcon ? `${asciiArt.warning} ` : '';
-    console.log(`${colors.brightYellow}${icon}${message}${colors.reset}`);
+    console.log(`${icon}${message}`);
 }
 
 function logInfo(message: string, withIcon: boolean = true): void {
     if (silentMode) return;
     const icon = withIcon ? `${asciiArt.info} ` : '';
-    console.log(`${colors.brightCyan}${icon}${message}${colors.reset}`);
+    console.log(`${icon}${message}`);
 }
 
 function logStep(step: number, total: number, message: string): void {
     if (silentMode) return;
     const progress = `${colors.dim}[${step}/${total}]${colors.reset}`;
-    console.log(`${progress} ${colors.brightMagenta}${message}${colors.reset}`);
+    console.log(`${progress} ${message}`);
 }
 
 function logSeparator(): void {
@@ -126,55 +126,55 @@ function logSeparator(): void {
 function logHeader(title: string): void {
     if (silentMode) return;
     console.log();
-    console.log(`${colors.bright}${colors.brightCyan}▓▓▓ ${title.toUpperCase()} ▓▓▓${colors.reset}`);
+    console.log(`${colors.bright}▓▓▓ ${title.toUpperCase()} ▓▓▓${colors.reset}`);
     logSeparator();
 }
 
 function logProgress(message: string, icon: string = asciiArt.gear): void {
     if (silentMode) return;
-    console.log(`${icon} ${colors.brightBlue}${message}${colors.reset}`);
+    console.log(`${icon} ${message}`);
 }
 
 function logFeature(feature: string, enabled: boolean = true): void {
     if (silentMode) return;
     const status = enabled ? asciiArt.checkmark : asciiArt.crossmark;
-    const color = enabled ? colors.brightGreen : colors.dim;
+    const color = enabled ? '' : colors.dim;
     console.log(`  ${status} ${color}${feature}${colors.reset}`);
 }
 
 function logProjectComplete(projectName: string): void {
     if (silentMode) return;
     console.log();
-    console.log(`${colors.brightGreen}╔═══════════════════════════════════════════════════════════════╗${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.bright}${colors.brightWhite}PROJECT CREATED SUCCESSFULLY!${colors.reset}${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.brightYellow}Project: ${colors.brightWhite}${projectName}${colors.reset}${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.brightCyan}Next steps:${colors.reset}${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.dim}1.${colors.reset} ${colors.brightWhite}cd ${projectName}${colors.reset}${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.dim}2.${colors.reset} ${colors.brightWhite}npm run dev${colors.reset}${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}  ${colors.dim}3.${colors.reset} ${colors.brightWhite}Start building amazing things!${colors.reset}${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}║${colors.reset}                 ${colors.brightGreen}${colors.reset}`);
-    console.log(`${colors.brightGreen}╚═══════════════════════════════════════════════════════════════╝${colors.reset}`);
+    console.log(`╔═══════════════════════════════════════════════════════════════╗`);
+    console.log(`║  `);
+    console.log(`║  ${colors.bright}PROJECT CREATED SUCCESSFULLY!${colors.reset}`);
+    console.log(`║  `);
+    console.log(`║  Project: ${projectName}`);
+    console.log(`║  `);
+    console.log(`║  Next steps:`);
+    console.log(`║  ${colors.dim}1.${colors.reset} cd ${projectName}`);
+    console.log(`║  ${colors.dim}2.${colors.reset} npm run dev`);
+    console.log(`║  ${colors.dim}3.${colors.reset} Start building amazing things!`);
+    console.log(`║                 `);
+    console.log(`╚═══════════════════════════════════════════════════════════════╝`);
     console.log();
-    console.log(`${colors.brightMagenta}${asciiArt.fire} Happy coding! ${asciiArt.fire}${colors.reset}`);
+    console.log(`${asciiArt.fire} Happy coding! ${asciiArt.fire}`);
     console.log();
 }
 
 function logInstalling(packageName: string): void {
     if (silentMode) return;
-    console.log(`${asciiArt.package} ${colors.brightBlue}Installing ${colors.brightWhite}${packageName}${colors.brightBlue}...${colors.reset}`);
+    console.log(`${asciiArt.package} Installing ${packageName}...`);
 }
 
 function logCreatingFolder(folderName: string): void {
     if (silentMode) return;
-    console.log(`${asciiArt.folder} ${colors.brightYellow}Creating folder: ${colors.brightWhite}${folderName}${colors.reset}`);
+    console.log(`${asciiArt.folder} Creating folder: ${folderName}`);
 }
 
 function logDatabaseSetup(dbType: string): void {
     if (silentMode) return;
-    console.log(`${asciiArt.database} ${colors.brightGreen}Setting up ${colors.brightWhite}${dbType}${colors.brightGreen} database...${colors.reset}`);
+    console.log(`${asciiArt.database} Setting up ${dbType} database...`);
 }
 
 export {
