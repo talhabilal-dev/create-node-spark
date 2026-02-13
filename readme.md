@@ -92,6 +92,7 @@ create-node-spark
   - MongoDB + Mongoose
   - MySQL + Knex.js
   - PostgreSQL + Prisma
+- ✅ **Docker Support**: Production-ready containerization
 - ✅ **File Uploads**: Optional Multer configuration
 
 </td>
@@ -103,6 +104,7 @@ create-node-spark
 - ✅ **Prettier Integration**: Consistent code formatting
 - ✅ **Environment Setup**: `.env` configuration ready
 - ✅ **Organized Structure**: Professional folder layout
+- ✅ **Docker Ready**: Multi-stage builds & compose files
 - ✅ **Zero Config**: Works out of the box
 - ✅ **Safety First**: Prevents accidental overwrites
 - ✅ **Minimal Dependencies**: Fast and lightweight
@@ -163,7 +165,7 @@ The CLI guides you through a seamless setup with these choices:
 | 💻 **Language** | JavaScript, TypeScript | Pick your language |
 | 🚀 **Framework** | Express, Fastify, None | Select your framework |
 | 🗄️ **Database** | MongoDB, MySQL, PostgreSQL, None | Choose database integration |
-| ⚙️ **Developer Tools** | ESLint, Prettier, Multer | Optional enhancements |
+| ⚙️ **Features** | ESLint, Multer, Docker | Optional enhancements |
 
 ---
 
@@ -297,6 +299,56 @@ const users = await knex('users')
 
 ---
 
+## 🐳 Docker Support
+
+**NEW in v2.7.0** - Production-ready containerization out of the box!
+
+When you enable Docker, create-node-spark automatically generates:
+
+### 📦 What You Get
+
+- **Dockerfile** - Multi-stage production build with Alpine Linux, security best practices, and health checks
+- **Dockerfile.dev** - Development setup with hot-reload support
+- **.dockerignore** - Optimized ignore patterns for minimal image size
+- **docker-compose.yml** - Full-stack orchestration (when database selected)
+- **npm scripts** - Ready-to-use Docker commands in package.json
+
+### 🚀 Quick Usage
+
+```bash
+# Enable Docker during setup
+npx create-node-spark --docker
+
+# Or use flags for full automation
+npx create-node-spark my-app --lang typescript --framework express --db mongodb --docker --yes
+```
+
+### 📜 Generated Docker Scripts
+
+```json
+{
+  "docker:build": "Build production image",
+  "docker:run": "Run production container",
+  "docker:dev": "Run dev container with hot-reload",
+  "docker:up": "Start all services (app + database)",
+  "docker:down": "Stop all services",
+  "docker:logs": "View container logs"
+}
+```
+
+### ✨ Features
+
+- ✅ **Multi-stage builds** for optimal image size
+- ✅ **Security**: Non-root user, Alpine-based images
+- ✅ **Database containers** with health checks
+- ✅ **Volume persistence** for data
+- ✅ **Network isolation** for security
+- ✅ **Hot-reload** in development mode
+
+[Learn more about Docker support →](DOCKER_FEATURE.md)
+
+---
+
 ## 🗺️ Development Roadmap
 
 ### ✅ Phase 1 - Foundation (COMPLETED)
@@ -329,6 +381,7 @@ const users = await knex('users')
 |---------|--------|--------|-------------|
 | PostgreSQL + Prisma | ✅ Done | Q1 2025 | Modern ORM with type safety |
 | Fastify Framework | ✅ Done | Q1 2025 | High-performance alternative |
+| Docker Integration | ✅ Done | Q1 2025 | Multi-stage builds & compose |
 | Enhanced Customization | 🔄 In Progress | Q1 2025 | Granular project structure control |
 | Template System | 🔄 In Progress | Q2 2025 | Pre-built project templates |
 | Testing Setup | 📋 Planned | Q2 2025 | Jest/Vitest configuration |
@@ -359,11 +412,10 @@ const users = await knex('users')
 
 | Feature | Description | Impact |
 |---------|-------------|--------|
-| Docker Integration | Containerization out-of-the-box | High |
-| Docker Compose | Multi-container development | Medium |
+| Kubernetes Configs | Production orchestration | High |
 | CI/CD Templates | GitHub Actions, GitLab CI | High |
-| Kubernetes Configs | Production orchestration | Medium |
 | Cloud Deployment | AWS, GCP, Azure templates | High |
+| Advanced Monitoring | Logging & metrics setup | Medium |
 
 #### 🔌 Extensibility (Q4 2025)
 
@@ -396,7 +448,7 @@ Pre-configured templates for common use cases:
 
 ```
 Phase 1: ████████████████████ 100% ✅
-Phase 2: ████████░░░░░░░░░░░░  45% 🚧
+Phase 2: ██████████░░░░░░░░░░  50% 🚧
 Phase 3: ░░░░░░░░░░░░░░░░░░░░   0% 📋
 ```
 

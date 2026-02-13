@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.1] - 2026-02-13
+
+### 🐛 Fixed
+
+- **Features Prompt Not Appearing**
+  - Fixed issue where the features selection prompt (ESLint, Multer, Docker) was not appearing in interactive mode
+  - Root cause: `createProjectDetailsFromFlags` was always creating an empty features array even when no flags were provided
+  - This empty array was treated as "features are already configured", preventing the interactive prompt from showing
+  - Solution: Only include `features` property in config object when feature flags are explicitly set
+  - Updated `src/utils/cliArgs.ts` to conditionally include features only when `--eslint`, `--multer`, or `--docker` flags are used
+  - Now interactive mode properly shows all three feature options: ESLint, Multer, and Docker
+
 ## [2.7.0] - 2026-02-13
 
 ### 🚀 Added
